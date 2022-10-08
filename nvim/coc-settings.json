@@ -1,0 +1,61 @@
+{
+  "codeLens.enable": true,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.referencesCodeLens.enable": false,
+  "typescript.referencesCodeLens.enable": false,
+  "typescript.implementationsCodeLens.enable": false,
+  "suggest.triggerAfterInsertEnter": true,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "workspace.workspaceFolderCheckCwd": true,
+  "suggest.noselect": false,
+  "suggest.labelMaxLength": 70,
+  "coc.preferences.formatOnSaveFiletypes": [],
+  "workspace.bottomUpFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "vue"
+  ],
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "snippets.textmateSnippetsRoots": ["~/.config/coc.snippets"],
+  "snippets.extends": {
+    "vue"             : ["javascript"],
+    "javascriptreact" : ["javascript"],
+    "typescriptreact" : ["typescript"]
+  },
+  "languageserver": {},
+  "emmet.includeLanguages": {
+    "vue-html"    : "html",
+    "vue-postcss" : "css",
+    "javascript"  : "css",
+    "hbs"         : "html"
+  },
+  "emmet.syntaxProfiles": {
+    "vue": "css"
+  },
+  "emmet.optimizeStylesheetParsing" : true,
+  "emmet.extensionsPath"            : "~/.config/nvim/",
+  "snippets.userSnippetsDirectory"  : "~/.config/nvim/snippets",
+  "tabnine.priority"                : 50,
+  "explorer.icon.enableNerdfont"    : true,
+  "explorer.width"                  : 30,
+  "explorer.trash.command"          : "nodejs:module",
+  "explorer.file.hiddenRules"       : {
+    "filenames": ["node_modules", ".git", "package-lock.json", "yarn.lock"]
+  }
+}

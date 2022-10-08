@@ -1,0 +1,75 @@
+snippet ed "export default" b
+export default $1;$0
+
+snippet me "module.export" b
+module.export${1|., = |}$2;
+
+snippet sc "switch" b
+switch ($1) {
+  case $2: $3;$4
+}$0
+
+snippet fn "function" b
+function $1($2) {
+  $3
+}$0
+
+snippet afn "async function" b
+async function $1($2) {
+  $3
+}$0
+
+snippet fa "arrow function" b
+($1) => $0
+
+snippet afa "async arrow function" b
+async ($1) => $0
+
+snippet c "const = " b
+const $1 = $2;$0
+
+snippet ls "localStorage" b
+localStorage.$0
+
+snippet ss "sessionStorage" b
+sessionStorage.$0
+
+snippet dir "console.dir" b
+console.dir({ $0 }, { depth: 10 });
+
+snippet tc "try catch" b
+try {
+  $1
+} catch (${2:error}) {
+  $3
+}$0
+
+snippet tf "try finally" b
+try {
+  $1
+} finally {
+  $2
+}$0
+
+snippet tcf "try catch finally" b
+try {
+  $1
+} catch (${2:error}) {
+  $3
+} finally {
+	$4
+}$0
+
+snippet JP "JSON.parse" b
+JSON.parse($1)$0
+
+snippet JS "JSON.stringify" b
+JSON.stringify($1)$0
+
+snippet imf "import from" b
+import $1 from "${2:$1}";
+$0
+
+snippet imd "import {} from" b
+import { $2 } from "$1";
+$0
