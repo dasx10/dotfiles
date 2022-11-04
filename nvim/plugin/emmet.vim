@@ -1,71 +1,3 @@
-"=============================================================================
-" File: emmet.vim
-" Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 26-Jul-2015.
-" Version: 0.86
-" WebPage: http://github.com/mattn/emmet-vim
-" Description: vim plugins for HTML and CSS hi-speed coding.
-" SeeAlso: http://emmet.io/
-" Usage:
-"
-"   This is vim script support expanding abbreviation like emmet.
-"   ref: http://emmet.io/
-"
-"   Type abbreviation
-"      +-------------------------------------
-"      | html:5_
-"      +-------------------------------------
-"   "_" is a cursor position. and type "<c-y>," (Ctrl+y and Comma)
-"   NOTE: Don't worry about key map. you can change it easily.
-"      +-------------------------------------
-"      | <!DOCTYPE HTML>
-"      | <html lang="en">
-"      | <head>
-"      |     <title></title>
-"      |     <meta charset="UTF-8">
-"      | </head>
-"      | <body>
-"      |      _
-"      | </body>
-"      | </html>
-"      +-------------------------------------
-"   Type following
-"      +-------------------------------------
-"      | div#foo$*2>div.bar
-"      +-------------------------------------
-"   And type "<c-y>,"
-"      +-------------------------------------
-"      |<div id="foo1">
-"      |    <div class="bar">_</div>
-"      |</div>
-"      |<div id="foo2">
-"      |    <div class="bar"></div>
-"      |</div>
-"      +-------------------------------------
-"
-" Tips:
-"
-"   You can customize behavior of expanding with overriding config.
-"   This configuration will be marged at loading plugin.
-"
-"     let g:user_emmet_settings = {
-"     \  'indentation' : '  ',
-"     \  'perl' : {
-"     \    'aliases' : {
-"     \      'req' : 'require '
-"     \    },
-"     \    'snippets' : {
-"     \      'use' : "use strict\nuse warnings\n\n",
-"     \      'warn' : "warn \"|\";",
-"     \    }
-"     \  }
-"     \}
-"
-"   You can set language attribute in html using 'emmet_settings.lang'.
-"
-" GetLatestVimScripts: 2981 1 :AutoInstall: emmet.vim
-" script type: plugin
-
 if &compatible || v:version < 702 || (exists('g:loaded_emmet_vim') && g:loaded_emmet_vim)
   finish
 endif
@@ -173,5 +105,3 @@ endif
 
 let &cpoptions = s:save_cpo
 unlet s:save_cpo
-
-" vim:set et:

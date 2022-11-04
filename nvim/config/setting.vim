@@ -38,7 +38,7 @@ set inccommand      =split
 set list listchars  =tab:→\ ,eol:↲,nbsp:␣,trail:·,space:·,extends:⟩,precedes:⟨
 set shortmess      +=c
 set signcolumn      =yes
-set updatetime      =750
+set updatetime      =500
 set wildmenu
 set wildignore      =*/node_modules/*,*/dist/*
 set background      =dark
