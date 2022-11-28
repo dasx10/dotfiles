@@ -13,4 +13,3 @@ void function run () {
     timer = setTimeout(() => process.exit(0), 0);
   });
 }()
-

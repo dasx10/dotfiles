@@ -67,9 +67,15 @@ snippet JS "JSON.stringify" b
 JSON.stringify($1)$0
 
 snippet imf "import from" b
-import $1 from "${2:$1}";
+import ${2:$1} from "$1";
 $0
 
-snippet imd "import {} from" b
+snippet imo "import {} from" b
 import { $2 } from "$1";
 $0
+
+snippet imd "import [] from " b
+import [$2] from "$1";$0
+
+snippet elif "else if ()" b
+else if (${1:condition}) $0
