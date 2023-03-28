@@ -1,0 +1,7 @@
+require("setting")
+require("pluggin")
+require("navigate")
+require("function")
+require("variable")
+require("keymap")
+vim.cmd('colorscheme tender')
