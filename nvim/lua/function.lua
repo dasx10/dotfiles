@@ -3,14 +3,6 @@ function CheckBackspace()
   return col == 0 or vim.fn.getline('.')[col - 1]:match('%s') ~= nil
 end
 
-function show_documentation()
-  if vim.bo.filetype == 'vim' or vim.bo.filetype == 'help' then
-    vim.cmd('h ' .. vim.fn.expand('<cword>'))
-  else
-    vim.fn.CocActionAsync('doHover')
-  end
-end
-
 function HasGit()
   local branch = vim.fn['fugitive#statusline']()
   return #branch > 1
@@ -70,3 +62,4 @@ function DiagnosticStatus()
   end
   return string.format('w:%d e:%d h:%d i:%d', warning, error, hint, information)
 end
+

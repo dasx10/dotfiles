@@ -22,6 +22,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Shift+C exec code
 bindsym $mod+Shift+I exec google-chrome
+bindsym $mod+Shift+S exec kazam
+bindsym $mod+Shift+E exec kitty vifm
 
 #alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
