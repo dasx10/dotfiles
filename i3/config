@@ -16,6 +16,21 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 #Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Distination to save screenshot to
+set $picture_dist $HOME$(date +'/Картинки/%d-%m-%y_%T.png')
+
+# Entire screen
+bindsym --release Print exec import -window root $picture_dist && notify-send "📸 Screenshot has been saved to ~/Pictures !"
+bindsym --release Shift+Print exec (import -window root png:- | xclip -t 'image/png' -selection 'clipboard' -i) && notify-send "📸 Screenshot has copied to clipboard !"
+
+# Screen crop
+bindsym --release Control+Print exec import $picture_dist && notify-send "📸 Screenshot has been saved to ~/Pictures !"
+bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' -selection 'clipboard' -i) && notify-send "📸 Screenshot has copied to clipboard !"
+
+# Window capture, to make it work change keybind from Mod1+Print to any other (alt + print doesn't work somehow)
+#bindsym --release Mod1+Print exec "import -window $(xdotool getwindowfocus) $picture_dist"
+#bindsym --release Mod1+Shift+Print exec "import -window $(xdotool getwindowfocus) png:- | xclip -t 'image/png' -selection 'clipboard' -i"
+
 #My bind programm
 bindsym $mod+Shift+q kill
 bindsym $mod+Return exec i3-sensible-terminal
