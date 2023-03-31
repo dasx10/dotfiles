@@ -283,7 +283,7 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 
 " Filter-out build and temporary files
 "
-" filter! {*.lo,*.o,*.d,*.class,*.pyc,*.pyo,.*~}
+filter node_modules
 
 " ------------------------------------------------------------------------------
 

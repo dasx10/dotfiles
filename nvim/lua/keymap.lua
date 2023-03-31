@@ -24,7 +24,7 @@ vim.g.mapleader = " "
 vim.api.nvim_set_keymap('x', '<leader>x', '<Plug>(coc-convert-snippet)', {noremap = true})
 vim.api.nvim_set_keymap('x', '<leader>cf', '<Plug>(coc-format-selected)', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>cf', '<Plug>(coc-format-selected)', {noremap = true})
-vim.api.nvim_set_keymap('x', '<leader>cas', '<Plug>(coc-codeaction-selected)', {noremap = true})
+vim.api.nvim_set_keymap('x', '<leader>cas', '<Plug>(coc-codeaction-selected)<cr>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>cas', '<Plug>(coc-codeaction-selected)', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>ca', '<Plug>(coc-codeaction)', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>cx', '<Plug>(coc-fix-current)', {noremap = true})
@@ -118,10 +118,10 @@ vim.api.nvim_set_keymap('n', '<A-n>', ':move<space>', {silent=true})
 
 vim.api.nvim_set_keymap('v', '<A-k>', ":move -2<cr>gv=gv", { silent=true, noremap = true })
 vim.api.nvim_set_keymap('v', '<A-j>', ":move +2<CR>gv=gv", {silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-h>', ":normal ^2dh<cr>gv", {silent=true})
-vim.api.nvim_set_keymap('v', '<A-l>', ":normal I <cr>gv", {silent=true})
-vim.api.nvim_set_keymap('v', '<A-n>', ':move<space>', {silent=true})
-vim.api.nvim_set_keymap('v', '<A-g>', ':move 0<CR>gb', {silent=true})
+vim.api.nvim_set_keymap('v', '<A-h>', ":normal ^2dh<cr>gv", {silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-l>', ":normal I <cr>gv", {silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-n>', ':move<space>', {silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-g>', ':move 0<CR>gb', {silent=true, noremap = true })
 
 -- Sort
 vim.api.nvim_set_keymap('v', '<leader>s', ':sort<CR>gv=gv', { noremap = true })
