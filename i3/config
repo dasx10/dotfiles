@@ -33,7 +33,7 @@ bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' 
 
 #My bind programm
 bindsym $mod+Shift+q kill
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Shift+C exec code
 bindsym $mod+Shift+I exec google-chrome

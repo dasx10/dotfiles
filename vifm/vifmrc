@@ -123,19 +123,13 @@ fileviewer {*.flac},<audio/flac> soxi
 filextype {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]},
-         \<video/*>
-        \ {View using ffplay}
-        \ ffplay -fs -autoexit %f,
-        \ {View using Dragon}
-        \ dragon %f:p,
-        \ {View using mplayer}
-        \ mplayer %f,
+         \<video/*> vlc
 
-fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-           \*.as[fx]},
-          \<video/*>
-         \ ffprobe -pretty %c 2>&1
+         " fileviewer {*.avi,wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+         " \*.fl[icv],*.m2v,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+         " \*.as[fx]},
+         " \<video/*>
+         " \ ffprobe -pretty %c 2>&1
 
 " Web
 filextype {*.html,*.htm},<text/html>
@@ -154,10 +148,7 @@ filetype {*.o},<application/x-object> nm %f | less
 filetype {*.[1-8]},<text/troff> man ./%c
 fileviewer {*.[1-8]},<text/troff> man ./%c | col -b
 
-" Images
-filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.webp} feh
-fileviewer {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.webp},<image/*>
-         \ identify %f
+
 
 " OpenRaster
 filextype *.ora
@@ -353,6 +344,25 @@ nnoremap <c-u> <c-w>x
 "     vifm --server-name "$VIFM_SERVER_NAME" --remote +"cd '$PWD'"
 "
 "" yank current directory path into the clipboard
+" Images
+filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.webp} kolourpaint
+filextype {*.ico} feh
+
+fileviewer {*.jpg,*.jpeg,*png,*.webp,*.ico,*.avif}
+	\ tiv -w %pw -h %px %c
+
+fileviewer {*.svg}
+  \ echo
+  \ %c
+  \ $(tiv -w %pw -h %px %c) $(man %c:p)
+
+fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
+          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
+          \*.as[fx]},
+  \ ffmpeg -i %c -vf fps=1 ~/_tmp.png -y > /dev/null 2>&1
+  \ || tiv ~/_tmp.png -w %pw -h %px
+  \ || rm ~/_tmp.png
+
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
@@ -370,6 +380,7 @@ nnoremap <space>cia :!convert %c:p $(sed "s|\.[a-z]\+|.avif|g" <<< %c:p)<cr>
 nnoremap <space>ciw :!convert %c:p $(sed "s|\.[a-z]\+|.webp|g" <<< %c:p)<cr>
 nnoremap <space>cij :!convert %c:p $(sed "s|\.[a-z]\+|.jpg|g" <<< %c:p)<cr>
 nnoremap <space>cip :!convert %c:p $(sed "s|\.[a-z]\+|.png|g" <<< %c:p)<cr>
+nnoremap <space>cii :!convert %c:p $(sed "s|\.[a-z]\+|.ico|g" <<< %c:p)<cr>
 
 " multiply
 vnoremap <space>cia :!for i in %f:p;do convert $i $(sed "s|\.[a-z]\+|.avif|g" <<< $i);done<cr>
