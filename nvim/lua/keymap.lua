@@ -116,12 +116,12 @@ vim.api.nvim_set_keymap('n', '<A-p>', "m0yyP`0k", {silent=true})
 vim.api.nvim_set_keymap('n', '<A-d>', "<Plug>(coc-range-select)", {silent=true})
 vim.api.nvim_set_keymap('n', '<A-n>', ':move<space>', {silent=true})
 
-vim.api.nvim_set_keymap('v', '<A-k>', ":move -2<cr>gv=gv", { silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-j>', ":move +2<CR>gv=gv", {silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-h>', ":normal ^2dh<cr>gv", {silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-l>', ":normal I <cr>gv", {silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-n>', ':move<space>', {silent=true, noremap = true })
-vim.api.nvim_set_keymap('v', '<A-g>', ':move 0<CR>gb', {silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":move -2<cr>gv=gv",  { silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ":move +2<CR>gv=gv",  { silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-h>', ":normal ^2dh<cr>gv", { silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-l>', ":normal I <cr>gv",   { silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-n>', ':move<space>',       { silent=true, noremap = true })
+vim.api.nvim_set_keymap('v', '<A-g>', ':move 0<CR>gb',      { silent=true, noremap = true })
 
 -- Sort
 vim.api.nvim_set_keymap('v', '<leader>s', ':sort<CR>gv=gv', { noremap = true })
@@ -168,13 +168,13 @@ vim.api.nvim_set_keymap('n', '<leader>R"', 'n0vi":sort! u<cr>`0==', {noremap = t
 vim.api.nvim_set_keymap('n', '<leader>R`', 'n0vi`:sort! u<cr>`0==', {noremap = true})
 
 -- CTRL MAP
-vim.api.nvim_set_keymap('v', '<C-/>', ':Commentary<CR>gv=gv', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-/>', ':Commentary<CR>==', {silent = true})
+vim.api.nvim_set_keymap('v', '<C-/>', ':Commentary<CR>gv=gv', {silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<C-/>', ':Commentary<CR>==',    {silent = true})
 vim.api.nvim_set_keymap('i', '<C-/>', '<esc>:Commentary<cr>', {silent = true})
 
 -- TMUX FIX COMMENT
-vim.api.nvim_set_keymap('v', '<C-_>', ':Commentary<CR>gv=gv', {silent = true})
-vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>==', {silent = true})
+vim.api.nvim_set_keymap('v', '<C-_>', ':Commentary<CR>gv=gv',  {silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<C-_>', ':Commentary<CR>==',     {silent = true})
 vim.api.nvim_set_keymap('i', '<C-_>', '<esc>:Commentary<cr>a', {silent = true})
 
 vim.api.nvim_set_keymap('n', '<leader>cc', ':Commentary<cr>', {})
