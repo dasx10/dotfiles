@@ -14,7 +14,6 @@
     },
     "css": {
       "snippets": {
-
         "mx"     : "margin-left: ${1:auto};\nmargin-right: ${1:auto};$2",
         "my"     : "margin-top: ${1:auto};\nmargin-bottom: ${1:auto};$2",
         "mil"    : "margin-inline:|;",

@@ -17,7 +17,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # Distination to save screenshot to
-set $picture_dist $HOME$(date +'/Картинки/%d-%m-%y_%T.png')
+set $picture_dist $HOME$(date +'/Images/%d-%m-%y_%T.png')
 
 # Entire screen
 bindsym --release Print exec import -window root $picture_dist && notify-send "📸 Screenshot has been saved to ~/Pictures !"

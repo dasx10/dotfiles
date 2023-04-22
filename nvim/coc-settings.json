@@ -1,9 +1,6 @@
 {
   "codeLens.enable": true,
   "javascript.suggestionActions.enabled": false,
-  "javascript.referencesCodeLens.enable": false,
-  "typescript.referencesCodeLens.enable": false,
-  "typescript.implementationsCodeLens.enable": false,
   "suggest.triggerAfterInsertEnter": true,
   "diagnostic.errorSign": "✘",
   "diagnostic.warningSign": "⚠",
@@ -11,7 +8,6 @@
   "workspace.workspaceFolderCheckCwd": true,
   "suggest.noselect": false,
   "suggest.labelMaxLength": 70,
-  "coc.preferences.formatOnSaveFiletypes": [],
   "workspace.bottomUpFiletypes": [
     "javascript",
     "javascriptreact",
@@ -51,12 +47,11 @@
   "emmet.optimizeStylesheetParsing" : true,
   "emmet.extensionsPath"            : "~/.config/nvim/",
   "snippets.userSnippetsDirectory"  : "~/.config/nvim/snippets",
-  "tabnine.priority"                : 50,
   "explorer.icon.enableNerdfont"    : true,
   "explorer.width"                  : 30,
   "explorer.trash.command"          : "nodejs:module",
   "explorer.file.hiddenRules"       : {
     "filenames": ["node_modules", ".git", "package-lock.json", "yarn.lock"]
   },
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
+  "snippets.ultisnips.pythonPrompt": false
 }

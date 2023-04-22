@@ -15,6 +15,7 @@ vim.o.showmatch = true
 vim.o.autoindent = true
 vim.o.linebreak = true
 
+
 -- vim.opt.statusline = '[%n]\\ %(%F%{(&mod?"*":"")}%)\ \%\\☰\\ %{FugitiveHead()}%\ \%\\☰\\ %{@.}%\ %=%{&fenc}\ %l/%L\ %y'
 vim.wo.foldcolumn = "1"
 vim.o.path = vim.o.path .. '**'
