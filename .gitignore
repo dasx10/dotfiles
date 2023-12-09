@@ -1,10 +1,2 @@
 /*
-!/i3
-!/i3status
-!/kitty
-!/nvim
-!/tmux
-!/vifm
-!/.vimrc
-!/.gitignore
-!/.git
+/!(i3|i3status|kitty|nvim|tmux|vifm)

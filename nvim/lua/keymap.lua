@@ -1,7 +1,6 @@
 vim.api.nvim_set_keymap('n', 'j', "(v:count == 0 ? 'gj' : 'j')", {noremap = true, silent = true, expr = true})
 vim.api.nvim_set_keymap('n', ')', "(v:count == 0 ? 'g' : '')", {noremap = true, silent = true, expr = true})
 
-
 vim.api.nvim_set_keymap('n', 'Zq', ':q<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '[g', '<Plug>(coc-diagnostic-prev)', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', ']g', '<Plug>(coc-diagnostic-next)', {noremap = true, silent = true})

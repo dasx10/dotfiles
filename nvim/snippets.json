@@ -1,8 +1,8 @@
 {
     "html": {
         "abbreviations": {
-            "a": "<a href=\"\">",
             "link": "<link rel=\"stylesheet\" href=\"\" />",
+            "a": "<a href=\"\">",
             "template": "<template />",
             "tmp": "<template />"
         },
