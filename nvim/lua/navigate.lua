@@ -10,7 +10,7 @@ function ToDownRecursive()
   if vim.fn.line('.') == vim.fn.line('$') then
     vim.cmd('move 0')
   else
-    vim.cmd('move +1')
+    vim.cmd('move +=1')
   end
 end
 

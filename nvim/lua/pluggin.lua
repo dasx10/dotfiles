@@ -1,14 +1,14 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
--- if not vim.loop.fs_stat(lazypath) then
---   vim.fn.system({
---     "git",
---     "clone",
---     "--filter=blob:none",
---     "https://github.com/folke/lazy.nvim.git",
---     "--branch=stable", -- latest stable release
---     lazypath,
---   })
--- end
+ if not vim.loop.fs_stat(lazypath) then
+   vim.fn.system({
+     "git",
+     "clone",
+     "--filter=blob:none",
+     "https://github.com/folke/lazy.nvim.git",
+     "--branch=stable", -- latest stable release
+     lazypath,
+   })
+ end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { 'jacoborus/tender.vim', lazy = false },
@@ -19,7 +19,17 @@ require("lazy").setup({
   { 'neoclide/coc.nvim', branch = 'master', build = "npx yarn install --frozen-lockfile" },
   { 'nvim-treesitter/nvim-treesitter', cmd = 'TSUpdate'},
   { 'mg979/vim-visual-multi', branch = 'master'},
-
+  { 'Exafunction/codeium.vim', branch = 'main' },
+  'f-person/git-blame.nvim',
+  {
+    'Wansmer/treesj',
+    keys = { '=t', '=j', '=s' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({
+      })
+    end,
+  },
   'vifm/vifm.vim',
   'ntpeters/vim-better-whitespace',
   'tpope/vim-fugitive',
@@ -38,4 +48,23 @@ require("lazy").setup({
   'tpope/vim-surround',
   'AndrewRadev/tagalong.vim',
   'alvan/vim-closetag',
+  "jackMort/ChatGPT.nvim", event = "VeryLazy", config = function() require("chatgpt").setup() end, dependencies = {
+    "MunifTanjim/nui.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim"
+  },
+  'MunifTanjim/nui.nvim'
 })
+
+vim.keymap.set('n', '=t', require('treesj').toggle)
+vim.keymap.set('n', '=T', function()
+    require('treesj').toggle({ split = { recursive = true } })
+end)
+vim.keymap.set('n', '=j', require('treesj').join)
+vim.keymap.set('n', '=J', function()
+    require('treesj').join({ split = { recursive = true } })
+end)
+vim.keymap.set('n', '=s', require('treesj').split)
+vim.keymap.set('n', '=J', function()
+    require('treesj').split({ split = { recursive = true } })
+end)

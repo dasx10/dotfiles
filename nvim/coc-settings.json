@@ -4,10 +4,41 @@
   "suggest.triggerAfterInsertEnter": true,
   "diagnostic.errorSign": "✘",
   "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "workspace.workspaceFolderCheckCwd": true,
   "suggest.noselect": false,
+  "suggest.snippetIndicator": "       ∷",
+  "html.suggest.html5": true,
   "suggest.labelMaxLength": 70,
+  "suggest.completionItemKindLabels": {
+    "class"         : "",
+    "color"         : "",
+    "constant"      : "",
+    "constructor"   : "",
+    "default"       : "",
+    "enum"          : "",
+    "enumMember"    : "",
+    "event"         : "鬒",
+    "field"         : "料",
+    "file"          : "",
+    "folder"        : "",
+    "function"      : "ƒ",
+    "interface"     : "",
+    "keyword"       : "",
+    "method"        : "",
+    "module"        : "",
+    "operator"      : "Ψ",
+    "property"      : "",
+    "reference"     : "渚",
+    "snippet"       : "",
+    "struct"        : "פּ",
+    "text"          : "",
+    "typeParameter" : "",
+    "unit"          : "",
+    "value"         : "",
+    "variable"      : "",
+  },
   "workspace.bottomUpFiletypes": [
     "javascript",
     "javascriptreact",
@@ -28,15 +59,18 @@
     "typescriptreact",
     "vue"
   ],
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
   "snippets.textmateSnippetsRoots": ["~/.config/coc.snippets"],
   "snippets.extends": {
-    "vue"             : ["javascript"],
+    "vue"             : ["javascript", "css"],
     "javascriptreact" : ["javascript"],
     "typescriptreact" : ["typescript"]
   },
   "languageserver": {},
   "emmet.includeLanguages": {
     "vue-html"    : "html",
+    "vue"         : "javascript",
     "vue-postcss" : "css",
     "javascript"  : "css",
     "hbs"         : "html"
@@ -53,5 +87,7 @@
   "explorer.file.hiddenRules"       : {
     "filenames": ["node_modules", ".git", "package-lock.json", "yarn.lock"]
   },
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "tsserver.implicitProjectConfig.checkJs": true,
+  "tsserver.locale": "ru"
 }

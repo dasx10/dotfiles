@@ -9,13 +9,16 @@
         "snippets": {
             "js": "<script>${1}</script>",
             "css": "<style>$1</style>",
-            "cc:ie6": "<!--[if lte IE 6]>\n\t|\n<![endif]-->"
+            "cc:ie6": "<!--[if lte IE 6]>\n\t|\n<![endif]-->",
+            "tmp": "<template>$1</template>",
+            "email": "<input type=\"email\" minlength=\"6\" maxlength=\"320\" pattern=\"(?=^\\\\w[\\\\w_.+-]{0,63}@\\\\w[\\\\w_.-]{0,251}\\.[a-zA-Z]{2,8}$)^\\\\w([\\\\w_.+-]{0,1})(\\\\w{1,31}[\\\\w_.+-]{0,1}\\\\w{1,31}){1,21}([_.+-]\\\\w+){0,10}@((\\\\w|\\\\w[\\\\w_.-]\\\\w){1,125}\\.(\\\\w|\\\\w[\\\\w_.-]\\\\w){1,125}){1,85}$\"$1>$0"
         }
     },
     "css": {
       "snippets": {
         "mx"     : "margin-left: ${1:auto};\nmargin-right: ${1:auto};$2",
         "my"     : "margin-top: ${1:auto};\nmargin-bottom: ${1:auto};$2",
+        "myx"    : "margin-top: ${1:auto};\nmargin-left: ${3:auto};\nmargin-bottom: ${2:auto};\nmargin-right: ${4:auto};$5",
         "mil"    : "margin-inline:|;",
         "mils"   : "margin-inline-start:|;",
         "mile"   : "margin-inline-end:|;",
