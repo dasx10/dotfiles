@@ -72,7 +72,6 @@
     "vue-html"    : "html",
     "vue"         : "javascript",
     "vue-postcss" : "css",
-    "javascript"  : "css",
     "hbs"         : "html"
   },
   "emmet.syntaxProfiles": {

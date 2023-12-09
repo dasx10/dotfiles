@@ -5,6 +5,6 @@
 !/nvim
 !/tmux
 !/vifm
-!.vimrc
-!.gitignore
+!/.vimrc
+!/.gitignore
 !/.git
