@@ -6,12 +6,16 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id setxkbmap "us,ua" ",winkeys" "grp:alt_shift_toggle"
 exec --no-startup-id feh --bg-scale ~/bg.jpg
+
 #Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 #Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -35,12 +39,16 @@ bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' 
 #My bind programm
 bindsym $mod+Shift+q kill
 bindsym $mod+Return exec kitty
-bindsym $mod+d exec dmenu_run
+bindsym $mod+Shift+Return exec "kitty tmux ; setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+Shift+T exec kitty tmux attach
+bindsym $mod+Shift+W exec kitty tmux a -t work
+bindsym $mod+d exec "dmenu_run ; setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
 bindsym $mod+Shift+C exec code
 bindsym $mod+Shift+I exec google-chrome
 bindsym $mod+Shift+S exec kazam
 bindsym $mod+Shift+E exec kitty vifm
-bindsym $mod+Shift+W exec kitty tmux attach
+bindsym $mod+Shift+P exec portwine
+bindsym --release Control+Shift+Delete exec kitty htop
 
 #alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -102,6 +110,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
+set $ws0 "0"
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -112,8 +121,11 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+set $ws11 "11"
+set $ws12 "12"
 
 #switch to workspace
+bindsym $mod+grave workspace number $ws0
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -124,8 +136,11 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+bindsym $mod+minus workspace number $ws11
+bindsym $mod+plus workspace number $ws12
 
 #move focused container to workspace
+bindsym $mod+Shift+grave move container to workspace number $ws0
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -136,6 +151,8 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+minus move container to workspace number $ws11
+bindsym $mod+Shift+plus move container to workspace number $ws12
 
 #restart i3
 #bindsym $mod+Shift+a reload

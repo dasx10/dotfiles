@@ -2,22 +2,30 @@ snippet imr "import React from " b
 import React from "react";
 $0
 
-snippet init "init" b
+snippet rtc "React template component" b
 import React from "react";
 
-const $1 = ($2) => $0;
+
+const $1 = ($2) => {
+	$3
+  return (
+		$0
+  );
+};
+
 export default $1;
 
-snippet useState "useState" b
+
+snippet uSt "useState" b
 const {
   0: $1,
   1: set${1/\w+/\u$0/g}
 } = useState($2);$0
 
-snippet useDispatch "const dispatch = useDispatch" b
-const dispatch = useDispatch();$0
+snippet uDis "const dispatch = useDispatch" b
+const dispatch = useDispatch$0();
 
-snippet useEffect "useEffect" b
+snippet uEff "useEffect" b
 useEffect(() => {
   $1
 }, [$2]);$0

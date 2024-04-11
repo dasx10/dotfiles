@@ -1,24 +1,23 @@
-const readline = require('readline');
-const { stdin, stdout, exit } = process;
-const RL = readline.createInterface(stdin, stdout);
+var readline = require('readline');
+var { stdin, stdout, exit } = process;
+var RL = readline.createInterface(stdin, stdout);
 
-let timer;
-const empty = "";
+var timer;
 void function main() {
-  return RL.question(empty, x => {
+  return RL.question("", (value) => {
     clearTimeout(timer);
-    if (x) {
+    if (value) {
       try {
-        console.log(x.replace(/[0-9\(][0-9\. \s\+\-\/\*\(\)]+/g, (e) => {
+        process.stdout.write(value.replace(/[\d\(][\d\. \s\+\-\/\*\(\)]+/g, (value) => {
           try {
-            return eval(e)
+            return eval(value)
           } catch (_) {
-            return e;
+            return value;
           }
         }));
         main();
       } catch (error) {
-        console.log(x.replace(/([0-9]+|[0-9]+\.[0-9]+)(| |\s)+(\+|\-|\/|\*|\*\*)(| |\s)+([0-9]+|[0-9]+\.[0-9]+)/g, (e) => eval(e)));
+        process.stdout.write(value.replace(/([\d]+|[\d]+\.[\d]+)(| |\s)+(\+|\-|\/|\*|\*\*)(| |\s)+([\d]+|[\d]+\.[\d]+)/g, (value) => eval(value)));
         main();
       }
       timer = setTimeout(exit, 0, 0);

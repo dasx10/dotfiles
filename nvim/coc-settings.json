@@ -5,6 +5,7 @@
   "diagnostic.errorSign": "✘",
   "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "workspace.workspaceFolderCheckCwd": true,
   "suggest.noselect": false,
@@ -45,13 +46,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact",
-    "vue"
-  ],
   "eslint.probe": [
     "javascript",
     "javascriptreact",
@@ -80,12 +74,6 @@
   "emmet.optimizeStylesheetParsing" : true,
   "emmet.extensionsPath"            : "~/.config/nvim/",
   "snippets.userSnippetsDirectory"  : "~/.config/nvim/snippets",
-  "explorer.icon.enableNerdfont"    : true,
-  "explorer.width"                  : 30,
-  "explorer.trash.command"          : "nodejs:module",
-  "explorer.file.hiddenRules"       : {
-    "filenames": ["node_modules", ".git", "package-lock.json", "yarn.lock"]
-  },
   "snippets.ultisnips.pythonPrompt": false,
   "tsserver.implicitProjectConfig.checkJs": true,
   "tsserver.locale": "ru"

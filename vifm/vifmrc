@@ -33,12 +33,13 @@ set statusline="  %t%= %A %10u:%-7g %15E %20d  "
 
 " :mark mark /full/directory/path [filename]
 
-mark b ~/bin/
 mark h ~/
-mark d ~/Downloads
-mark p ~/Картинки
-mark w /media/data/work
-mark m /media/data/
+mark b ~/bin/
+mark d ~/Downloads/
+mark p ~/Картинки/
+mark s ~/screens/
+mark r ~/screen_record/
+mark w ~/work/
 mark c ~/.config
 
 " ------------------------------------------------------------------------------
@@ -386,22 +387,26 @@ nnoremap d$ vGd
 
 nnoremap o :clone<space>
 
-nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
+nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "yank to clipboard"<cr>
 
-nnoremap yp :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
-nnoremap yf :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
-nnoremap yn :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
-nnoremap yc :!cat -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content is yanked to clipboard"<cr>
+nnoremap yp :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
+nnoremap yf :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "yank to clipboard"<cr>
+nnoremap yn :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
+nnoremap yc :!cat -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
 
-vnoremap yp :!echo -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
-vnoremap yf :!echo -n %f | xclip -selection clipboard %i<cr>:echo expand('%"c') "is yanked to clipboard"<cr>
-vnoremap yn :!echo -n %f:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "is yanked to clipboard"<cr>
-vnoremap yc :!cat -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content is yanked to clipboard"<cr>
+vnoremap yp :!echo -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
+vnoremap yf :!echo -n %f | xclip -selection clipboard %i<cr>:echo expand('%"c') "yank to clipboard"<cr>
+vnoremap yn :!echo -n %f:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
+vnoremap yc :!cat -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
 
-nnoremap cp :!mv %d %c<left><left>
+nnoremap cd :!mv %d /%c<left><left><left>
+vnoremap cd :!mv %d /%c<left><left><left>
+nnoremap ch :!ln %f<space>
+nnoremap cs :!ln -s %f<space>
 
 nnoremap v. ggvG
 nnoremap y. ggvG:yank<cr>
+nnoremap yh :!ln %f %d/.%c<cr>:delete %d.%c<cr>
 
 vnoremap e :!nvim -d %f<cr>
 
@@ -424,16 +429,35 @@ vnoremap <space>cip :!for i in %f:p;do convert $i $(sed "s|\.[a-z]\+|.png|g" <<<
 
 " Create
 nnoremap ajs :touch .js<left><left><left>
-nnoremap ajI :touch index.js<cr>
+nnoremap ajS :touch index.js<cr>
+nnoremap ajsx :touch .jsx<left><left><left><left>
+nnoremap ajsX :!cat ~/.config/vifm/templates/index.jsx >> %d/index.jsx & cat ~/.config/vifm/templates/.ComponentProps.d.ts >> %d/.ComponentProps.d.ts<cr>
 nnoremap ajson :touch .json<left><left><left><left><left>
 nnoremap ats :touch .ts<left><left><left>
-nnoremap atd :touch .d.ts<left><left><left><left><left>
-nnoremap atI :touch index.ts<cr>
-nnoremap atD :touch index.d.ts<cr>
-nnoremap att :touch .txt<left><left><left><left>
+nnoremap atS :touch index.ts<cr>
+nnoremap ads :touch .d.ts<left><left><left><left><left>
+nnoremap aDs :touch index.d.ts<cr>
+nnoremap atxt :touch .txt<left><left><left><left>
+nnoremap amd :touch .md<left><left><left>
+nnoremap amD :touch README.md<left><left><left>
 nnoremap acss :touch .css<left><left><left><left>
+nnoremap acsS :touch style.css<cr>
+nnoremap ascss :touch .scss<left><left><left><left><left>
+nnoremap ascsS :touch style.scss<cr>
 
 nnoremap rdij :!mkdir %c:r && mv ./%c %d/%c:r/index.js<cr>
 
 nnoremap aa :touch<space>
 nnoremap ad :mkdir<space>
+
+highlight /^.*\.(jsx)$/ ctermfg=blue
+highlight /^.*\.(tsx)$/ ctermfg=steelblue
+highlight /^.*\.(css)$/ ctermfg=cyan
+highlight /^.*\.(js|mjs|cjs)$/ ctermfg=yellow
+highlight /^.*\.(ts)$/ ctermfg=blue
+highlight /^.*\.(json)$/ ctermfg=khaki
+highlight /^package.json$/ ctermfg=purple
+highlight /^.*\.(txt)$/ ctermfg=white
+highlight /^.*\.(md)$/ ctermfg=pink1
+highlight /^\..*rc$/ ctermfg=magenta
+highlight /^\..*ignore$/ ctermfg=darkred

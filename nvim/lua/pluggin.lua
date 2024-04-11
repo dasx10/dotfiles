@@ -1,3 +1,11 @@
+local js_based_languages = {
+  "typescript",
+  "javascript",
+  "typescriptreact",
+  "javascriptreact",
+  "vue",
+}
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
  if not vim.loop.fs_stat(lazypath) then
    vim.fn.system({
@@ -9,6 +17,7 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
      lazypath,
    })
  end
+
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { 'jacoborus/tender.vim', lazy = false },
@@ -29,6 +38,11 @@ require("lazy").setup({
       require('treesj').setup({
       })
     end,
+  },
+  {
+    'barrett-ruth/import-cost.nvim',
+    build = 'sh install.sh yarn',
+    config = true
   },
   'vifm/vifm.vim',
   'ntpeters/vim-better-whitespace',
@@ -53,7 +67,20 @@ require("lazy").setup({
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim"
   },
-  'MunifTanjim/nui.nvim'
+  'MunifTanjim/nui.nvim',
+ 	-- Debug
+	'mfussenegger/nvim-dap',
+	{
+		'mxsdev/nvim-dap-vscode-js',
+		dependencies = {"mfussenegger/nvim-dap"},
+	},
+	{
+		'microsoft/vscode-js-debug',
+		lazy = false,
+  		build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+	}, "dominikduda/vim_current_word",
+  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap"} },
+ 	-- Debug
 })
 
 vim.keymap.set('n', '=t', require('treesj').toggle)

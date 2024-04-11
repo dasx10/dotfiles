@@ -13,6 +13,7 @@ vim.o.confirm = true
 vim.o.showmatch = true
 vim.o.autoindent = true
 vim.o.linebreak = true
+vim.o.spell = true
 
 
 -- vim.opt.statusline = '[%n]\\ %(%F%{(&mod?"*":"")}%)\ \%\\☰\\ %{FugitiveHead()}%\ \%\\☰\\ %{@.}%\ %=%{&fenc}\ %l/%L\ %y'
