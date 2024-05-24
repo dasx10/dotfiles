@@ -10,9 +10,6 @@ vim.g.coc_global_extensions = {
   'coc-htmlhint',
   'coc-emmet',
   'coc-snippets',
-  'coc-spell-checker',
-  'coc-webpack',
   'coc-svg',
   'coc-xml',
-  'coc-vetur',
 }

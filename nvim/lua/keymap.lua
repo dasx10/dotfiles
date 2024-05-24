@@ -43,6 +43,8 @@ nvim_set_keymap('n', '<leader>cN', ':<C-u>CocPrev<CR>', {silent = true, noremap 
 nvim_set_keymap('n', '<leader>cr', ':<C-u>CocListResume<CR>', {silent = true, noremap = true})
 nvim_set_keymap('n', '<leader><space>', ':<C-u>CocList commands<cr>', {silent = true, noremap = true})
 
+nvim_set_keymap('n', '<leader>q',        ':bufdo bd<cr>', {})
+
 -- Git
 nvim_set_keymap('n', '<leader>g',        ':Git<space>', {})
 nvim_set_keymap('n', '<leader>g<space>', ':Git blame<cr>', {})
@@ -132,6 +134,7 @@ nvim_set_keymap('n', '<A-k>', ':lua ToUpRecursive()<cr>==',   { silent=true, nor
 nvim_set_keymap('n', '<A-j>', ':lua ToDownRecursive()<cr>==', { silent=true, noremap = true })
 nvim_set_keymap('n', '<A-g>', ':move 0<CR>==',                { silent=true, noremap = true })
 nvim_set_keymap('n', '<A-l>', "m0I\t<esc>`0",                 { silent=true, noremap = true })
+nvim_set_keymap('n', '<A-S-l>', "m0I\t\t<esc>`0",                 { silent=true, noremap = true })
 nvim_set_keymap('n', '<A-h>', "m0^2dh`0",                     { silent=true, noremap = true })
 nvim_set_keymap('n', '<A-n>', "m0yyp`0j",                     { silent=true, noremap = true })
 nvim_set_keymap('n', '<A-p>', "m0yyP`0k",                     { silent=true, noremap = true })
@@ -325,3 +328,6 @@ vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, 
 vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
 vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
 vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+
+nvim_set_keymap('i', '<A-n>', '<esc>', {noremap = true, silent = true})
+nvim_set_keymap('x', '<A-n>', '<esc>', {noremap = true, silent = true})

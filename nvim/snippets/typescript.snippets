@@ -8,3 +8,39 @@ snippet interface "interface" b
 interface $1 {
 	$0
 }
+
+snippet c "const" b
+const $1 = $2;$0
+
+snippet l "() => " b
+($1) => $0
+
+snippet al "async () =>" b
+async ($1) => $0
+
+snippet f "function" b
+function $1($2) {
+  $3
+}$0
+
+snippet af "async function" b
+async function $1($2) {
+  $3
+}$0
+
+snippet cl "class" b
+class $1 {
+  constructor ($2) {
+    $3
+  }
+}$0
+
+snippet cle "class extends" b
+class $1 extends $2 {
+  constructor ($3) {
+    super($4);
+    $5
+  }
+
+  $6
+}$0

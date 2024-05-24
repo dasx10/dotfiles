@@ -1,9 +1,12 @@
-require('readline').createInterface(process.stdin, process.stdout).question('',x=>{
-  try {
-    return console.log(JSON.stringify(JSON.parse(x),null,2));
-  } catch (error) {
-    return console.log(x);
-  } finally {
-    process.exit(0);
-  }
-});
+(() => {
+  var stdout = process.stdout;
+  require('readline').createInterface(process.stdin, stdout).question('', (value) =>{
+    try {
+      return stdout.write(JSON.stringify(JSON.parse(value),null,2));
+    } catch (error) {
+      return stdout.write(value);
+    } finally {
+      process.exit(0);
+    }
+  });
+})()

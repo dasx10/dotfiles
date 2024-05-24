@@ -1,6 +1,6 @@
 local js_based_languages = {
-  "typescript",
   "javascript",
+  "typescript",
   "typescriptreact",
   "javascriptreact",
   "vue",
@@ -62,25 +62,8 @@ require("lazy").setup({
   'tpope/vim-surround',
   'AndrewRadev/tagalong.vim',
   'alvan/vim-closetag',
-  "jackMort/ChatGPT.nvim", event = "VeryLazy", config = function() require("chatgpt").setup() end, dependencies = {
-    "MunifTanjim/nui.nvim",
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim"
-  },
   'MunifTanjim/nui.nvim',
- 	-- Debug
-	'mfussenegger/nvim-dap',
-	{
-		'mxsdev/nvim-dap-vscode-js',
-		dependencies = {"mfussenegger/nvim-dap"},
-	},
-	{
-		'microsoft/vscode-js-debug',
-		lazy = false,
-  		build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
-	}, "dominikduda/vim_current_word",
-  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap"} },
- 	-- Debug
+  "dominikduda/vim_current_word",
 })
 
 vim.keymap.set('n', '=t', require('treesj').toggle)

@@ -365,9 +365,9 @@ fileviewer {*.svg}
 fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]},
-  \ ffmpeg -i %c -vf fps=1 ~/_tmp.png -y > /dev/null 2>&1
-  \ || tiv ~/_tmp.png -w %pw -h %px
-  \ || rm ~/_tmp.png
+  \ ffmpeg -i %c -vf fps=1 /tmp/_tmp.png -y > /dev/null 2>&1
+  \ || tiv /tmp/_tmp.png -w %pw -h %px
+  \ || rm /tmp/_tmp.png
 
 fileviewer {*.json}
   \ echo console.log\(JSON.stringify\($(cat '%c'),,null,,2\)\)\; | node
@@ -427,6 +427,7 @@ nnoremap <space>ciP :!convert %c:p $(sed "s|\.[a-z]\+|.png|g" <<< %c:p)<C-a><rig
 nnoremap <space>cip :!convert %c:p $(sed "s|\.[a-z]\+|.png|g" <<< %c:p)<cr>
 vnoremap <space>cip :!for i in %f:p;do convert $i $(sed "s|\.[a-z]\+|.png|g" <<< $i);done<cr>
 
+
 " Create
 nnoremap ajs :touch .js<left><left><left>
 nnoremap ajS :touch index.js<cr>
@@ -435,6 +436,8 @@ nnoremap ajsX :!cat ~/.config/vifm/templates/index.jsx >> %d/index.jsx & cat ~/.
 nnoremap ajson :touch .json<left><left><left><left><left>
 nnoremap ats :touch .ts<left><left><left>
 nnoremap atS :touch index.ts<cr>
+nnoremap atsx :touch .tsx<left><left><left><left><left>
+nnoremap atsX :!cat ~/.config/vifm/templates/index.tsx >> %d/index.tsx<cr>
 nnoremap ads :touch .d.ts<left><left><left><left><left>
 nnoremap aDs :touch index.d.ts<cr>
 nnoremap atxt :touch .txt<left><left><left><left>

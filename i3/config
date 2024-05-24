@@ -4,7 +4,7 @@ font pango:monospace 8
 #Exec
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id setxkbmap "us,ua" ",winkeys" "grp:alt_shift_toggle"
+exec --no-startup-id setxkbmap "us,ua" ",winkeys" "grp:caps_toggle,alt_shift_toggle,grp_led:caps,"
 exec --no-startup-id feh --bg-scale ~/bg.jpg
 
 #Use pactl to adjust volume in PulseAudio.
