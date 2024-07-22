@@ -438,8 +438,8 @@ nnoremap ats :touch .ts<left><left><left>
 nnoremap atS :touch index.ts<cr>
 nnoremap atsx :touch .tsx<left><left><left><left><left>
 nnoremap atsX :!cat ~/.config/vifm/templates/index.tsx >> %d/index.tsx<cr>
-nnoremap ads :touch .d.ts<left><left><left><left><left>
-nnoremap aDs :touch index.d.ts<cr>
+nnoremap adts :touch .d.ts<left><left><left><left><left>
+nnoremap adtS :touch index.d.ts<cr>
 nnoremap atxt :touch .txt<left><left><left><left>
 nnoremap amd :touch .md<left><left><left>
 nnoremap amD :touch README.md<left><left><left>

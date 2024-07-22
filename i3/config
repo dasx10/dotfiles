@@ -44,10 +44,14 @@ bindsym $mod+Shift+T exec kitty tmux attach
 bindsym $mod+Shift+W exec kitty tmux a -t work
 bindsym $mod+d exec "dmenu_run ; setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
 bindsym $mod+Shift+C exec code
-bindsym $mod+Shift+I exec google-chrome
+bindsym $mod+Shift+M exec mongodb-compass
+bindsym $mod+Shift+G exec google-chrome
+bindsym $mod+Shift+F exec firefox
 bindsym $mod+Shift+S exec kazam
 bindsym $mod+Shift+E exec kitty vifm
 bindsym $mod+Shift+P exec portwine
+bindsym $mod+Shift+O exec screenruler
+bindsym $mod+Shift+Delete exec kitty top
 bindsym --release Control+Shift+Delete exec kitty htop
 
 #alternatively, you can use the cursor keys:
