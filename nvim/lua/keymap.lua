@@ -77,7 +77,7 @@ nvim_set_keymap(
 nvim_set_keymap(
   'n',
   '<leader>w',
-  ':w<cr>:!git commit --amend -am ""' .. L(49),
+  ':w<cr>:!git commit --amend -am ""' .. L(1),
   e
 )
 nvim_set_keymap(

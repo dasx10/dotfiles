@@ -71,7 +71,15 @@
 			],
 			"initializationOptions": {},
 			"settings": {}
-		}
+		},
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "filetypes": ["go"]
+    }
+  },
+  "yaml.schemas": {
+      "kubernetes": "/*.yaml"
   },
   "emmet.includeLanguages": {
     "vue-html"    : "html",
