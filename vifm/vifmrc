@@ -141,6 +141,7 @@ filextype {*.html,*.htm},<text/html>
         \ firefox %f &,
         \ {Open with uzbl}
         \ uzbl-browser %f %i &,
+
 filetype {*.html,*.htm},<text/html> links, lynx
 
 " Object
@@ -360,7 +361,7 @@ fileviewer {*.svg}
   \ echo %c
   \ && tiv -w %pw -h %px %c
   \ && identify %c:p
-  \ && cat %c:p
+  \ && bat %c:p
 
 fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
@@ -374,6 +375,7 @@ fileviewer {*.json}
 
 filetype *.ts tsc
 
+fileviewer *.[js],*.[cjs],*.[mjs],*.[ts],*.[tsx],*.[jsx] bat --color always --wrap never --pager never %c -p
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h

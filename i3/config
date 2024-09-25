@@ -9,8 +9,8 @@ exec --no-startup-id feh --bg-scale ~/bg.jpg
 
 #Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -39,19 +39,21 @@ bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' 
 #My bind programm
 bindsym $mod+Shift+q kill
 bindsym $mod+Return exec kitty
-bindsym $mod+Shift+Return exec "kitty tmux ; setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
-bindsym $mod+Shift+T exec kitty tmux attach
-bindsym $mod+Shift+W exec kitty tmux a -t work
-bindsym $mod+d exec "dmenu_run ; setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+Shift+Return exec "kitty tmux & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+Shift+T exec "kitty ~/.config/tmux/attach.sh & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+Shift+W exec "kitty ~/.config/tmux/work.sh & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+d exec "dmenu_run ; setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
 bindsym $mod+Shift+C exec code
 bindsym $mod+Shift+M exec mongodb-compass
 bindsym $mod+Shift+G exec google-chrome
 bindsym $mod+Shift+F exec firefox
+bindsym $mod+Shift+P exec gpick --pick
 bindsym $mod+Shift+S exec kazam
 bindsym $mod+Shift+E exec kitty vifm
-bindsym $mod+Shift+P exec portwine
 bindsym $mod+Shift+O exec screenruler
 bindsym $mod+Shift+Delete exec kitty top
+bindsym $mod+Shift+A exec portproton
+bindsym $mod+Print exec kazam
 bindsym --release Control+Shift+Delete exec kitty htop
 
 #alternatively, you can use the cursor keys:
@@ -114,7 +116,8 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
-set $ws0 "0"
+exec google-chrome
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -127,9 +130,9 @@ set $ws9 "9"
 set $ws10 "10"
 set $ws11 "11"
 set $ws12 "12"
+set $ws0 "0"
 
 #switch to workspace
-bindsym $mod+grave workspace number $ws0
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -142,9 +145,9 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 bindsym $mod+minus workspace number $ws11
 bindsym $mod+plus workspace number $ws12
+bindsym $mod+grave workspace number $ws0
 
 #move focused container to workspace
-bindsym $mod+Shift+grave move container to workspace number $ws0
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -157,6 +160,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+minus move container to workspace number $ws11
 bindsym $mod+Shift+plus move container to workspace number $ws12
+bindsym $mod+Shift+grave move container to workspace number $ws0
 
 #restart i3
 #bindsym $mod+Shift+a reload

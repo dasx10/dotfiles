@@ -25,7 +25,11 @@ require("lazy").setup({
 
   'christoomey/vim-tmux-navigator',
 
-  { 'neoclide/coc.nvim', branch = 'master', build = "yarn install --frozen-lockfile" },
+  {
+    'neoclide/coc.nvim',
+    branch = 'master',
+    build = "yarn install --frozen-lockfile",
+  },
   { 'nvim-treesitter/nvim-treesitter', cmd = 'TSUpdate'},
   { 'mg979/vim-visual-multi', branch = 'master'},
   { 'Exafunction/codeium.vim', branch = 'main' },

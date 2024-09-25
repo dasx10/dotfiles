@@ -61,7 +61,18 @@
     "javascriptreact" : ["javascript"],
     "typescriptreact" : ["typescript"]
   },
-  "languageserver": {},
+  "languageserver": {
+		"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+  },
   "emmet.includeLanguages": {
     "vue-html"    : "html",
     "vue"         : "javascript",
