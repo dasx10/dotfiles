@@ -72,7 +72,7 @@ nvim_set_keymap(
 )
 nvim_set_keymap('n', '<leader>ga%', ':Git add %<CR>', e)
 nvim_set_keymap('n', '<leader>ga',  ':Git add<space>', e)
-nvim_set_keymap('n', '<leader>gam', ':Git commit -am<space>', e)
+nvim_set_keymap('n', '<leader>gam', ':Git commit -am<space>""<left>', e)
 nvim_set_keymap('n', '<leader>gb',  ':Git branch<space>', e)
 nvim_set_keymap('n', '<leader>gc',  ':Git commit<space>', e)
 nvim_set_keymap('n', '<leader>gcm', ':Git commit -m ""<left>', e)
