@@ -9,6 +9,10 @@ local n = { noremap = true }
 local e = {}
 local x = { expr = true }
 
+local L = function(length)
+  return string.rep("<left>", length)
+end
+
 nvim_set_keymap('n', 'ysof', "ca{Object.freeze(<Esc>p%a)<Esc>", sn)
 nvim_set_keymap('n', 'csl', "yiwoconsole.log()<Esc>P", sn)
 nvim_set_keymap('n', 'csd', "yiwoconsole.dir({  }, { depth: 10 })<Esc>18hp", sn)
@@ -66,16 +70,29 @@ nvim_set_keymap('n', '<leader>gpo',      ':Git push origin<space>', e)
 nvim_set_keymap('n', '<leader>gpp',      ':!git push origin $(git branch --show-current) &<cr>', e)
 nvim_set_keymap(
   'n',
-  '<leader>gap',
-  ':!git add -A && git commit -m "" && git push origin $(git branch --show-current)<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>',
+  '<leader>gC',
+  ':!git commit -am "" && git push origin $(git branch --show-current)' .. L(49),
+  e
+)
+nvim_set_keymap(
+  'n',
+  '<leader>w',
+  ':w<cr>:!git commit --amend -am ""' .. L(49),
+  e
+)
+nvim_set_keymap(
+  'n',
+  '<leader>W',
+  ':w<cr>:!git commit --amend -am "" && git push origin $(git branch --show-current)' .. L(49),
   e
 )
 nvim_set_keymap('n', '<leader>ga%', ':Git add %<CR>', e)
 nvim_set_keymap('n', '<leader>ga',  ':Git add<space>', e)
-nvim_set_keymap('n', '<leader>gam', ':Git commit -am<space>""<left>', e)
 nvim_set_keymap('n', '<leader>gb',  ':Git branch<space>', e)
 nvim_set_keymap('n', '<leader>gc',  ':Git commit<space>', e)
+nvim_set_keymap('n', '<leader>gam', ':Git commit -am<space>""<left>', e)
 nvim_set_keymap('n', '<leader>gcm', ':Git commit -m ""<left>', e)
+nvim_set_keymap('n', '<leader>gcM', ':Git commit --amend -m ""' .. L(1), e)
 nvim_set_keymap('n', '<leader>gd',  ':Git diff<CR>', s)
 nvim_set_keymap('n', '<leader>gdh', ':Gdiffsplit<CR>', s)
 nvim_set_keymap('n', '<leader>gds', ':Gvdiffsplit<CR>', s)
