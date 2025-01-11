@@ -35,14 +35,28 @@ localStorage.$0
 snippet ss "sessionStorage" b
 sessionStorage.$0
 
-snippet dir "console.dir" b
-console.dir({ $1 }, { depth: 10 })$0
+snippet csd "console.dir" b
+(console.dir({ $1 }, { depth: 10 }))$0
+
+snippet csl "console.log" b
+(console.log($1))$0
+
+snippet cse "console.error" b
+(console.error($1))$0
 
 snippet tc "try catch" b
 try {
   $1
 } catch (${2:error}) {
   $3
+}$0
+
+snippet tct "try catch throw" b
+try {
+  $1
+} catch (${2:error}) {
+  $3
+  throw $2;
 }$0
 
 snippet tf "try finally" b
@@ -62,10 +76,10 @@ try {
 }$0
 
 snippet JP "JSON.parse" b
-JSON.parse($1)$0
+(JSON.parse($1))$0
 
 snippet JS "JSON.stringify" b
-JSON.stringify($1)$0
+(JSON.stringify($1))$0
 
 snippet imf "import from" b
 import ${2:$1} from "$1";$0
@@ -79,23 +93,18 @@ if ($1) $0
 snippet ef "else if ()" b
 else if ($1) $0
 
+snippet elif "else if ()" b
+else if ($1) $0
+
 snippet el "else if ()" b
 else $0
 
-snippet reg:email "regex email" b
-/(?=^\w[\w_.+-]{0,63}@\w[\w_.-]{0,251}\.[a-zA-Z]{2,8}$)^\w([\w_.+-]{0,1})(\w{1,31}[\w_.+-]{0,1}\w{1,31}){1,21}([_.+-]\w+){0,10}@((\w|\w[\w_.-]\w){1,125}.(\w|\w[\w_.-]\w){1,125}){1,83}$/i
 
-snippet thenlog "then log" b
-.then(
-  (${1:data}) => (console.dir({ $1 }, { depth: 10 }), $1),
-  ($1Error) => (console.error({ $1Error }), Promise.reject($1Error))
-)$0
+snippet jl "JSON.stringify(console.log(_))" b
+(console.log(JSON.stringify($1, null, 2)))
 
-snippet jsonlog "JSON.stringify(console.log(_))" b
-console.log(JSON.stringify($1, null, 2))
-
-snippet thenjsonlog "Description" b
-.then(value => console.log(JSON.stringify(value, null, 2)) || value)
+snippet tjl "Description" b
+.then((value) => (console.log(JSON.stringify(value, null, 2)), value))
 $0
 
 snippet cl "class" b
@@ -115,7 +124,7 @@ class $1 extends $2 {
   $6
 }$0
 
-snippet thensavejson "save json" b
+snippet thendf "save json" b
 .then(value => {
   import("fs").then(fs => fs.promises.writeFile(
     process.cwd() + "/" + "$1.json",
@@ -130,8 +139,47 @@ snippet thensavejson "save json" b
 	return value;
 })$0
 
+snippet thend "then log" b
+.then(
+  (${1:data}) => (console.dir(({ $1 }), { depth: 10 }), $1),
+  ($1Error) => (console.error({ $1Error }), (Promise.reject($1Error)))
+)$0
+
+snippet thent "then tap" b
+.then((${1:value}) => ($2, $1))$0
+
+snippet catcht "catch tap" b
+.catch((${1:error}) => ($2, Promise.reject($1)))$0
+
 snippet c "const " b
 const $1 = $2;$0
+
+
+snippet ac "async function try catch" b
+(async function $1($2) {
+  try {
+    $3
+  } catch (${4:error}) {
+    $5
+  }
+})$0
+
+snippet acdp "async function try catch" b
+(/** @param {$1} ${2:value} */
+async function $3($2) {
+  try {
+		$4
+	} catch (${5:error}) {
+		$6
+	}
+})$0
+
+snippet pt "setTimeout" b
+(new Promise((resolve) => setTimeout(resolve, $1)))$0
+
+snippet apt "setTimeout" b
+(await new Promise((resolve) => setTimeout(resolve, ${1:1000})));
+$0
 
 snippet f "function" b
 function $1($2) {
@@ -140,7 +188,7 @@ function $1($2) {
 
 snippet fr "function" b
 function $1($2) {
-  return $3
+  return $3;
 }$0
 
 snippet af "async function ()" b
@@ -150,25 +198,43 @@ async function $1($2) {
 
 snippet afr "async function ()" b
 async function $1($2) {
-  return $3
+  return $3;
 }$0
 
-snippet al "async () =>" b
-async ($1) => $0
+snippet _ "() =>" b
+(($1) => $0)
 
-snippet l "() =>" b
-($1) => $0
+snippet _a "async () =>" b
+(async ($1) => {
+  $2
+})
+
+snippet __a "async () =>" b
+((${1:y}) => (async (${2:x}) => {
+  $3
+}))
+
+snippet __ "() => () => ..." b
+((${1:y}) => ((${2:x}) => $3))$0
+
+snippet ___ "() => () => ..." b
+((${1:z}) => ((${2:y}) => ((${3:x}) => $4)))$0
+
+snippet ___a "() => () => ..." b
+((${1:z}) => ((${2:y}) => (async (${3:x}) => {
+  $4
+})))$0
 
 snippet r "return" b
 return $1;
 
-snippet ag "async function*()" b
-async function*$1($2) {
+snippet g "function*()" b
+function*$1($2) {
   $3
 }$0
 
-snippet g "function*()" b
-function*$1($2) {
+snippet ag "async function*()" b
+async function*$1($2) {
   $3
 }$0
 
@@ -177,3 +243,104 @@ for (const $1 in $2) $0
 
 snippet fof "for of" b
 for (const $1 of $2) $0
+
+snippet pd "Promise." b
+Promise.$1
+
+snippet pj "Promise.reject" b
+Promise.reject($1)
+
+snippet pje "Promise.reject" b
+Promise.reject(new Error($1))
+
+snippet pjem "Promise.reject" b
+Promise.reject(new Error("$1"))
+
+snippet ps "Promise.resolve" b
+Promise.resolve($1)
+
+snippet pst "Promise.resolve" b
+Promise
+  .resolve($1)
+  .then($2)
+$0
+
+snippet pa "Promise.all" b
+Promise.all($1)$0
+
+snippet paa "Promise.all" b
+Promise.all([
+  $1
+])$0
+
+snippet pat "Promise.all" b
+Promise
+  .all([$1])
+  .then((${2:values}) => ${3:$2})
+  $0
+
+snippet pas "Promise.all" b
+Promise.allSettled($1)$0
+
+snippet paas "Promise.all" b
+Promise.allSettled([
+  $1
+])$0
+
+snippet paast "Promise.all" b
+Promise
+	.allSettled([
+		$1
+	])
+	.then((${2:values}) => ${3:$2})
+$0
+
+snippet past "Promise.all" b
+Promise
+	.allSettled($1)
+	.then((${2:values}) => ${3:$2})
+$0
+
+snippet pall "Promise.all" b
+Promise.all($1)
+
+snippet np "new Promise" b
+new Promise((${1|resolve\, reject,resolve|}) => $2)$0
+
+snippet oz "Object.freeze" b
+Object.freeze($1)$0
+
+snippet cz "const _ = Object.freeze" b
+const $1 = Object.freeze($2);
+
+snippet coz "const _ = Object.freeze" b
+const $1 = Object.freeze({
+  $2
+});
+
+snippet caz "const _ = Object.freeze" b
+const $1 = Object.freeze([
+  $2
+]);
+
+snippet ne "new Error" b
+new Error($1)$0
+
+snippet nem "new Error" b
+new Error("$1")$0
+
+snippet fori "for ;" b
+for (let ${1:index} = ${2:0}; ${3:$1}; $1++) {
+	$4
+}$0
+
+snippet c_ "const () =>" b
+const $1 = (($2) => $3);$0
+
+snippet c__ "const () =>" b
+const $1 = ((${2:y}) => ((${3:x}) => $4));$0
+
+snippet c_a "const () =>" b
+const $1 = (async ($2) => {
+	$3
+});$0

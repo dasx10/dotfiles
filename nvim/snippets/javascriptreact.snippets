@@ -15,14 +15,10 @@ const $1 = ($2) => {
 
 export default $1;
 
+snippet cuseS "useState" b
+const [$1, set${1/\w+/\u$0/g}] = useState($2);$0
 
-snippet uSt "useState" b
-const {
-  0: $1,
-  1: set${1/\w+/\u$0/g}
-} = useState($2);$0
-
-snippet uDis "const dispatch = useDispatch" b
+snippet cuseD "const dispatch = useDispatch" b
 const dispatch = useDispatch$0();
 
 snippet uEff "useEffect" b

@@ -1,57 +1,50 @@
-vim.o.encoding = 'UTF-8'
-vim.o.lazyredraw = true
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.cursorline = true
-vim.wo.cursorcolumn = true
-vim.o.compatible = false
-vim.o.ruler = true
-vim.o.smarttab = true
-vim.o.cindent = true
-vim.o.hidden = true
-vim.o.confirm = true
-vim.o.showmatch = true
-vim.o.autoindent = true
-vim.o.linebreak = true
-vim.o.spell = true
-
-
--- vim.opt.statusline = '[%n]\\ %(%F%{(&mod?"*":"")}%)\ \%\\☰\\ %{FugitiveHead()}%\ \%\\☰\\ %{@.}%\ %=%{&fenc}\ %l/%L\ %y'
-vim.wo.foldcolumn = "1"
-vim.o.path = vim.o.path .. '**'
-vim.o.switchbuf = 'useopen'
-vim.o.clipboard = "unnamedplus"
-vim.o.regexpengine = 1
-vim.o.scrolloff = 9
-vim.o.synmaxcol = 170
-vim.wo.colorcolumn = '85'
-vim.o.pumblend = 25
-vim.o.winblend = 25
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
+local o = vim.o
+local wo = vim.wo
+local opt = vim.opt
+o.encoding = 'UTF-8'
+o.lazyredraw = true
+wo.number = true
+wo.relativenumber = true
+wo.cursorline = true
+wo.cursorcolumn = true
+o.compatible = false
+o.ruler = true
+o.smarttab = true
+o.cindent = true
+o.hidden = true
+o.confirm = true
+o.showmatch = true
+o.autoindent = true
+o.linebreak = true
+o.spell = true
+wo.foldcolumn = "1"
+o.path = vim.o.path .. '**'
+o.switchbuf = 'useopen'
+o.clipboard = "unnamedplus"
+o.regexpengine = 1
+o.scrolloff = 9
+o.synmaxcol = 170
+wo.colorcolumn = '85'
+o.pumblend = 25
+o.winblend = 25
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.expandtab = true
 vim.bo.softtabstop = 2
-vim.o.expandtab = true
-vim.o.inccommand = 'split'
-vim.o.list = true
-vim.o.listchars = 'tab:→ ,eol:↲,nbsp:␣,trail:·,space:·,extends:⟩,precedes:⟨'
-vim.o.shortmess = vim.o.shortmess .. 'c'
-vim.wo.signcolumn = 'yes'
-vim.o.updatetime = 500
-vim.o.wildmenu = true
-vim.o.wildignore = '*/node_modules/*,*/dist/*'
-vim.o.background = 'dark'
-
-if not vim.o.guifont then
-  vim.o.guifont = 'Fira Code:h12'
+o.expandtab = true
+o.inccommand = 'split'
+o.list = true
+o.listchars = 'tab:→ ,eol:↲,nbsp:␣,trail:·,space:·,extends:⟩,precedes:⟨'
+o.shortmess = vim.o.shortmess .. 'c'
+wo.signcolumn = 'yes'
+o.updatetime = 500
+o.wildmenu = true
+o.wildignore = '*/node_modules/*,*/dist/*'
+o.background = 'dark'
+if not o.guifont then
+  o.guifont = 'Fira Code:h12'
 end
-
 if vim.fn.has('termguicolors') then
-  vim.o.termguicolors = true
+  o.termguicolors = true
 end
-
--- vim.cmd('filetype off')
--- vim.cmd('filetype plugin indent on')
--- vim.cmd('syntax on')
--- vim.cmd('highlight Cursorline cterm=bold ctermbg=black')
-vim.o.mouse = 'a'
+o.mouse = 'a'

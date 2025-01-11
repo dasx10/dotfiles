@@ -1,8 +1,12 @@
+alias mk="touch"
+alias mkd="mkdir"
 alias nv="nvim"
+alias nv.="nvim ."
 alias wge="sudo systemctl status wg-quick@wg0.service"
 alias wgeon="sudo systemctl start wg-quick@wg0.service"
 alias wgeoff="sudo systemctl stop wg-quick@wg0.service"
 alias cl="clear"
+alias c="clear"
 alias seten="setxkbmap -layout us ; sleep 0.5s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
 alias d="docker"
 
@@ -10,20 +14,27 @@ alias npmrs="npm run start"
 alias npmrb="npm run build"
 alias npmrd="npm run dev"
 alias npmi="npm i"
+alias npmi="npm uninstall"
 alias npmd="npm i -D"
 alias npmg="npm i -g"
+
+alias kc="kubectl --kubeconfig"
 
 function cw () {
   while true; do clear;$1;sleep 1;done
 }
 
 write_or_read () {
-  if [[ -w "$3" ]]; then
-    "$1" "$3"
-  elif [[ -r "$3" ]]; then
-    "$2" "$3"
+  if [[ -e "$3" ]]; then
+    if [[ -w "$3" ]]; then
+      "$1" "$3"
+    elif [[ -r "$3" ]]; then
+      "$2" "$3"
+    else
+      echo "Access Denied"
+    fi
   else
-    echo "Access Denied"
+    echo "File Not Found"
   fi
 }
 
@@ -38,12 +49,12 @@ exec_write_or_read () {
 do_exec_write_or_read () {
   if [[ -x "$4" ]]; then
     if grep -q "^#!" "$4"; then
-      ./"$4"
+      ./"$4" "${@:5}"
     else
-      "$1" "$4"
+      "$1" "$4" "${@:5}"
     fi
   else
-    write_or_read "$1" "$2" "$3" "$4"
+    write_or_read "$1" "$2" "$3" "$4" "${@:5}"
   fi
 }
 
@@ -58,10 +69,10 @@ over_write_or_read () {
 function goo () {
   google-chrome "https://google.com/search?q=$1"
 }
-
 function loc () {
   google-chrome "http://localhost:${1:-3000}"
 }
+alias chrome=google-chrome
 
 function yank () {
   xclip -selection clipboard $1
@@ -91,7 +102,6 @@ alias -s env="write_or_read $EDITOR $TEXT_VIEWER"
 alias -s yaml="write_or_read $EDITOR $TEXT_VIEWER"
 alias -s yml="write_or_read $EDITOR $TEXT_VIEWER"
 alias -s deb="apt install"
-alias -s tf="terraform apply"
 alias -s zshrc="source"
 alias -s exe="portproton"
 alias -s pub="yank"

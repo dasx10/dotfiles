@@ -1,22 +1,15 @@
-local js_based_languages = {
-  "javascript",
-  "typescript",
-  "typescriptreact",
-  "javascriptreact",
-  "vue",
-}
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
- if not vim.loop.fs_stat(lazypath) then
-   vim.fn.system({
-     "git",
-     "clone",
-     "--filter=blob:none",
-     "https://github.com/folke/lazy.nvim.git",
-     "--branch=stable", -- latest stable release
-     lazypath,
-   })
- end
+
+-- if not vim.loop.fs_stat(lazypath) then
+--  vim.fn.system({
+  --     "git",
+  --     "clone",
+  --     "--filter=blob:none",
+  --     "https://github.com/folke/lazy.nvim.git",
+  --     "--branch=stable", -- latest stable release
+  --     lazypath,
+  --   })
+  -- end
 
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
@@ -39,21 +32,19 @@ require("lazy").setup({
     keys = { '=t', '=j', '=s' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('treesj').setup({
-      })
+      require('treesj').setup({})
     end,
-  },
-  {
-    'barrett-ruth/import-cost.nvim',
-    build = 'sh install.sh yarn',
-    config = true
+    lazy = true,
   },
   'vifm/vifm.vim',
   'ntpeters/vim-better-whitespace',
   'tpope/vim-fugitive',
   'airblade/vim-gitgutter',
 
-  'lilydjwg/colorizer',
+  {
+    'lilydjwg/colorizer',
+    ft = 'css,scss,html,less',
+  },
 
   'vim-airline/vim-airline',
   'vim-airline/vim-airline-themes',
@@ -61,24 +52,36 @@ require("lazy").setup({
   'junegunn/vim-easy-align',
 
   'tpope/vim-commentary',
-  'nvim-lua/plenary.nvim',
-  'nvim-telescope/telescope.nvim',
-  'tpope/vim-surround',
-  'AndrewRadev/tagalong.vim',
-  'alvan/vim-closetag',
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
+    'tpope/vim-surround',
+  },
+  {
+    'AndrewRadev/tagalong.vim',
+    ft = 'html,jsx,tsx,javascriptreact,typescriptreact',
+  },
+  {
+    'alvan/vim-closetag',
+    ft = 'html,jsx,tsx,javascriptreact,typescriptreact',
+  },
   'MunifTanjim/nui.nvim',
   "dominikduda/vim_current_word",
 })
 
-vim.keymap.set('n', '=t', require('treesj').toggle)
-vim.keymap.set('n', '=T', function()
+local set = vim.keymap.set
+
+set('n', '=t', require('treesj').toggle)
+set('n', '=T', function()
     require('treesj').toggle({ split = { recursive = true } })
 end)
-vim.keymap.set('n', '=j', require('treesj').join)
-vim.keymap.set('n', '=J', function()
+set('n', '=j', require('treesj').join)
+set('n', '=J', function()
     require('treesj').join({ split = { recursive = true } })
 end)
-vim.keymap.set('n', '=s', require('treesj').split)
-vim.keymap.set('n', '=J', function()
+set('n', '=s', require('treesj').split)
+set('n', '=J', function()
     require('treesj').split({ split = { recursive = true } })
 end)

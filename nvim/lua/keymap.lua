@@ -13,10 +13,6 @@ local L = function(length)
   return string.rep("<left>", length)
 end
 
-nvim_set_keymap('n', 'ysof', "ca{Object.freeze(<Esc>p%a)<Esc>", sn)
-nvim_set_keymap('n', 'csl', "yiwoconsole.log()<Esc>P", sn)
-nvim_set_keymap('n', 'csd', "yiwoconsole.dir({  }, { depth: 10 })<Esc>18hp", sn)
-
 nvim_set_keymap('n', 'j', "(v:count == 0 ? 'gj' : 'j')", snx)
 nvim_set_keymap('n', ')', "(v:count == 0 ? 'g' : '')", snx)
 
@@ -38,25 +34,19 @@ nvim_set_keymap('n', '<M-C-RightMouse>', '<Plug>(VM-Mouse-Column)', sn)
 
 nvim_set_keymap('n', '<leader><cr>', ':.!zsh<cr>', n)
 -- CoC
-nvim_set_keymap('x', '<leader>x', '<Plug>(coc-convert-snippet)', n)
+nvim_set_keymap('x', '<leader>ss', '<Plug>(coc-convert-snippet)', n)
 nvim_set_keymap('x', '<leader>cf', '<Plug>(coc-format-selected)', n)
 nvim_set_keymap('n', '<leader>cf', '<Plug>(coc-format-selected)', n)
-nvim_set_keymap('x', '<leader>cas', '<Plug>(coc-codeaction-selected)<cr>', n)
-nvim_set_keymap('n', '<leader>cas', '<Plug>(coc-codeaction-selected)', n)
-nvim_set_keymap('n', '<leader>ca', '<Plug>(coc-codeaction)', n)
-nvim_set_keymap('n', '<leader>cx', '<Plug>(coc-fix-current)', n)
-nvim_set_keymap('n', '<leader>cd', ':<C-u>CocList diagnostics<cr>', sn)
-nvim_set_keymap('n', '<leader>ce', ':<C-u>CocList extensions<cr>', sn)
-nvim_set_keymap('n', '<leader>co', ':<C-u>CocList outline<cr>', sn)
-nvim_set_keymap('n', '<leader>cs', ':<C-u>CocList -I symbols<cr>', sn)
-nvim_set_keymap('n', '<leader>cn', ':<C-u>CocNext<CR>', sn)
-nvim_set_keymap('n', '<leader>cN', ':<C-u>CocPrev<CR>', sn)
+nvim_set_keymap('x', '<leader><tab>', '<Plug>(coc-codeaction-selected)<cr>', n)
+nvim_set_keymap('n', '<leader><tab>', '<Plug>(coc-codeaction)', n)
+nvim_set_keymap('n', '=x', '<Plug>(coc-fix-current)', n)
+nvim_set_keymap('n', '<leader>fd', ':<C-u>CocList diagnostics<cr>', sn)
+nvim_set_keymap('n', '<leader>fo', ':<C-u>CocList outline<cr>', sn)
+nvim_set_keymap('n', '<leader>fs', ':<C-u>CocList -I symbols<cr>', sn)
 nvim_set_keymap('n', '<leader>cr', ':<C-u>CocListResume<CR>', sn)
 nvim_set_keymap('n', '<leader><space>', ':<C-u>CocList commands<cr>', sn)
+nvim_set_keymap('n', '<leader>q', ':bufdo bd<cr>', e)
 
-nvim_set_keymap('n', '<leader>q',        ':bufdo bd<cr>', e)
-
--- Git
 nvim_set_keymap('n', '<leader>g',        ':Git<space>', e)
 nvim_set_keymap('n', '<leader>g<space>', ':Git blame<cr>', e)
 nvim_set_keymap('n', '<leader>gA',       ':!git add -A<CR>', s)
@@ -111,6 +101,7 @@ nvim_set_keymap('n', '<leader>gr',  ':Git rebase<space>', e)
 nvim_set_keymap('n', '<leader>gro', ':Git push origin :<left>', e)
 nvim_set_keymap('n', '<leader>gs',  ':!git status<CR>', e)
 nvim_set_keymap('n', '<leader>gw',  ':Git switch<space>', e)
+-- https://github.com/enclaive/emcp_be/compare/staging...yk/state_fix?expand=1
 
 -- Searching
 nvim_set_keymap('n', '<leader>od', '<Plug>(coc-definition)', s)
@@ -146,8 +137,6 @@ nvim_set_keymap('n', '<leader>fc', 'V:!node ~/.config/nvim/scripts/toCamel.js<CR
 nvim_set_keymap('x', '<leader>fc', ':!node ~/.config/nvim/scripts/toCamel.js<CR>', s)
 nvim_set_keymap('x', '<leader>fm', ':!node ~/.config/nvim/scripts/calc.js<CR>', s)
 nvim_set_keymap('n', '<leader>fm', 'V:!node ~/.config/nvim/scripts/calc.js<CR>', s)
-nvim_set_keymap('x', '<leader>fi', ':!node ~/.config/nvim/scripts/import.js<CR>', s)
-nvim_set_keymap('n', '<leader>fi', 'V:!node ~/.config/nvim/scripts/import.js<CR>', s)
 
 nvim_set_keymap('n', '<C-s>', ':write<CR>', s)
 nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', s)
@@ -270,11 +259,12 @@ nvim_set_keymap('n', '=:', 'vi{=vi{:EasyAlign<cr><right>:', n)
 nvim_set_keymap('n', '=+', 'vip=vip:EasyAlign<cr><right>=', n)
 nvim_set_keymap('n', '= ', 'vip=vip:EasyAlign<cr>*<space>', n)
 
-nvim_set_keymap('n', '=.', 'm0ggVG=`0', n)
 nvim_set_keymap('n', '=l', ':CocCommand eslint.executeAutofix<CR>', n)
 nvim_set_keymap('n', '=p', ':CocCommand prettier.formatFile<CR>', n)
 nvim_set_keymap('v', '=l', ':CocCommand eslint.executeAutofix<CR>', n)
 nvim_set_keymap('v', '=p', ':CocCommand prettier.formatFile<CR>', n)
+nvim_set_keymap('n', '=L', ':!npx eslint --fix %<cr>', n)
+nvim_set_keymap('n', '=.', 'm0ggVG=`0', n)
 
 -- Delete
 nvim_set_keymap('n', 'dp', 'dip', n)
@@ -296,7 +286,6 @@ nvim_set_keymap('v', 'D<cr>', ':g/^\\s*$/d<CR>gv', e)
 nvim_set_keymap('v', 'D<space>', ':StripWhitespace<cr>gv', e)
 nvim_set_keymap('v', 'D<tab>', ':normal ^d0<cr>', e)
 nvim_set_keymap('v', 'DV', 'm0d:%s/<C-r>"//<cr>`0', e)
-
 -- Fold
 nvim_set_keymap('n', 'z*', 'Vggzf', e)
 nvim_set_keymap('n', 'z#', 'VGzf', e)
@@ -308,7 +297,6 @@ nvim_set_keymap('n', 'z"', 'va"zf', e)
 nvim_set_keymap('n', "z'", 'va\'zf', e)
 nvim_set_keymap('n', 'z`', 'va`zf', e)
 nvim_set_keymap('n', 'zp', 'vipzfzz', e)
-
 -- Visual
 nvim_set_keymap('n', 'vp', 'vip', e)
 nvim_set_keymap('n', 'v.', ':0<CR>VG', e)
@@ -317,7 +305,6 @@ nvim_set_keymap('n', 'v!', 'gg<C-v>Gzt', e)
 nvim_set_keymap('n', 'v#', 'm0gg<C-v>`0zb', e)
 nvim_set_keymap('n', 'v*', 'm0G<C-v>`0zt', e)
 nvim_set_keymap('n', 'vv', '0v$', e)
-
 -- Change
 nvim_set_keymap('n', 'cp', 'cip', n)
 nvim_set_keymap('n', 'c.', 'ggVGs', n)
@@ -325,7 +312,6 @@ nvim_set_keymap('n', 'c#', [["0yiwVgg:s/<C-r>0//cg<left><left><left>]], n)
 nvim_set_keymap('n', 'c!', [["0yiw:%s/<C-r>0//cg<left><left><left>]], n)
 nvim_set_keymap('n', 'c*', [["0yiwVG:s/<C-r>0//cg<left><left><left>]], n)
 nvim_set_keymap('v', 'C', [["0y:%s/<C-r>0//cg<left><left><left>]], n)
-
 -- Copy
 nvim_set_keymap('n', 'yp', 'yip', n)
 nvim_set_keymap('n', 'yd', ':let @+ = expand("%")<cr>', n)
@@ -349,9 +335,11 @@ vim.keymap.set("i", "<S-Tab>", "coc#pum#visible() ? coc#pum#prev(1) : '<C-h>'", 
 vim.keymap.set("i", "<CR>", "coc#pum#visible() ? coc#pum#confirm() : '<C-g>u<CR>'", snx)
 
 vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, x)
-vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, x)
-vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, x)
+vim.keymap.set('i', '<a-,>', function() return vim.fn['codeium#CycleCompletions'](1) end, x)
+vim.keymap.set('i', '<a-.>', function() return vim.fn['codeium#CycleCompletions'](-1) end, x)
 vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, x)
 
 nvim_set_keymap('i', '<A-n>', '<esc>', sn)
 nvim_set_keymap('x', '<A-n>', '<esc>', sn)
+
+nvim_set_keymap('n', '<leader>oh', ":CodeiumChat<cr>", sn)

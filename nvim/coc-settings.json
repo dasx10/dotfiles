@@ -7,6 +7,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "",
   "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.displayByAle": false,
   "workspace.workspaceFolderCheckCwd": true,
   "suggest.noselect": false,
   "suggest.snippetIndicator": "       ∷",
@@ -46,15 +47,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
-  "eslint.autoFixOnSave": true,
-  "eslint.alwaysShowStatus": true,
   "snippets.textmateSnippetsRoots": ["~/.config/coc.snippets"],
   "snippets.extends": {
     "vue"             : ["javascript", "css"],
@@ -79,21 +71,20 @@
     }
   },
   "yaml.schemas": {
-      "kubernetes": "/*.yaml"
+    "kubernetes": "/*.yaml"
   },
   "emmet.includeLanguages": {
-    "vue-html"    : "html",
-    "vue"         : "javascript",
-    "vue-postcss" : "css",
     "hbs"         : "html"
-  },
-  "emmet.syntaxProfiles": {
-    "vue": "css"
   },
   "emmet.optimizeStylesheetParsing" : true,
   "emmet.extensionsPath"            : "~/.config/nvim/",
   "snippets.userSnippetsDirectory"  : "~/.config/nvim/snippets",
   "snippets.ultisnips.pythonPrompt": false,
   "tsserver.implicitProjectConfig.checkJs": true,
-  "tsserver.locale": "ru"
+  "tsserver.locale": "ru",
+  "files.associations": {
+    "*.tf.hbs": "terraform",
+    "*.yaml.hbs": "yaml",
+    "*.yml.hbs": "yaml"
+  }
 }
