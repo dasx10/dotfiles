@@ -101,6 +101,7 @@ nvim_set_keymap('n', '<leader>gr',  ':Git rebase<space>', e)
 nvim_set_keymap('n', '<leader>gro', ':Git push origin :<left>', e)
 nvim_set_keymap('n', '<leader>gs',  ':!git status<CR>', e)
 nvim_set_keymap('n', '<leader>gw',  ':Git switch<space>', e)
+nvim_set_keymap('n', '<leader>gz',  ':LazyGit<cr>', e)
 -- https://github.com/enclaive/emcp_be/compare/staging...yk/state_fix?expand=1
 
 -- Searching

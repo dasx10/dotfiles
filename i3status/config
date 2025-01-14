@@ -16,8 +16,6 @@ general {
 }
 
 #order += "ipv6"
-#order += "disk /"
-#order += "disk /home"
 #order += "run_watch DHCP"
 #order += "run_watch VPN"
 order += "ethernet wg0"
@@ -26,28 +24,39 @@ order += "ethernet enp3s0"
 order += "battery 1"
 # order += "cpu_temperature 0"
 order += "cpu_usage"
+order += "memory"
 order += "load"
+order += "disk /"
+order += "disk /home/dev/doc"
 order += "volume master"
-order += "tztime localtime"
 order += "tztime localdate"
+order += "tztime localtime"
+
+memory {
+  memory_used_method = classical
+  format=" ☷ %used %percentage_used | %free %percentage_free"
+# format=" ☷ %used %total | %percentage_free free"
+  threshold_degraded="50%"
+  threshold_critical="10%"
+}
 
 disk "/" {
   format = "  %avail "
   prefix_type = custom
 }
 
-disk "/home" {
+disk "/home/dev/doc" {
   format = "  %avail "
   prefix_type = custom
 }
 
-run_watch DHCP {
-  pidfile = "/var/run/dhclient*.pid"
-}
+# run_watch DHCP {
+#   pidfile = "/var/run/dhclient*.pid"
+# }
 
-run_watch VPN {
-  pidfile = "/var/run/vpnc/pid"
-}
+# run_watch VPN {
+#   pidfile = "/var/run/vpnc/pid"
+# }
 
 wireless wlo1 {
   format_up = "  (%quality at %essid) %ip "
