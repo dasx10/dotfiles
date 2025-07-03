@@ -1,10 +1,10 @@
 set $mod Mod4
-font pango:monospace 8
+font pango:monospace 8, FontAwesome 8
 
 #Exec
+exec --no-startup-id ~/.config/scripts/eng.sh
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id setxkbmap "us,ua" ",winkeys" "grp:caps_toggle,alt_shift_toggle,grp_led:caps,"
 exec --no-startup-id feh --bg-scale ~/bg.jpg
 
 #Use pactl to adjust volume in PulseAudio.
@@ -24,7 +24,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 #Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Distination to save screenshot to
+# Destination to save screenshot to
 set $picture_dist $HOME$(date +'/screens/%d-%m-%y_%T.png')
 set $picture_dist_part $HOME$(date +'/screens/_%d-%m-%y_%T.png')
 
@@ -40,13 +40,15 @@ bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' 
 #bindsym --release Mod1+Print exec "import -window $(xdotool getwindowfocus) $picture_dist"
 #bindsym --release Mod1+Shift+Print exec "import -window $(xdotool getwindowfocus) png:- | xclip -t 'image/png' -selection 'clipboard' -i"
 
-#My bind programm
+#My bind program
 bindsym $mod+Shift+q kill
 bindsym $mod+Return exec kitty
-bindsym $mod+Shift+Return exec "kitty tmux & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
-bindsym $mod+Shift+T exec "kitty ~/.config/tmux/attach.sh & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
-bindsym $mod+Shift+W exec "kitty ~/.config/tmux/work.sh & setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
-bindsym $mod+d exec "dmenu_run ; setxkbmap -layout us ; sleep 0.3s ; setxkbmap -layout 'us,ua' -option ',winkeys' -option 'grp:alt_shift_toggle'"
+bindsym $mod+Shift+Return exec "kitty tmux & ~/.config/scripts/eng.sh"
+bindsym $mod+Shift+T exec "kitty ~/.config/tmux/attach.sh & ~/.config/scripts/eng.sh"
+bindsym $mod+Shift+W exec "kitty ~/.config/scripts/work.sh & ~/.config/scripts/eng.sh"
+bindsym $mod+d exec "dmenu_run ; ~/.config/scripts/eng.sh"
+bindsym $mod+p exec "~/.config/scripts/eng.sh; ~/.config/scripts/passmenu.sh"
+bindsym $mod+i exec "~/.config/scripts/eng.sh; ~/.config/scripts/links.sh"
 bindsym $mod+Shift+C exec code
 bindsym $mod+Shift+M exec mongodb-compass
 bindsym $mod+Shift+G exec google-chrome

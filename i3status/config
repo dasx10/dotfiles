@@ -8,7 +8,7 @@
 
 general {
   colors = true
-  interval = 5
+  interval = 7
   output_format = "i3bar"
   color_bad = "#ff2200"
   color_degraded = "#00dddd"

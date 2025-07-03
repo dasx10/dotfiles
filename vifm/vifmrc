@@ -27,7 +27,8 @@ if !has('win')
 endif
 
 " set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
-set statusline="  %t%= %A %10u:%-7g %15E %20d  "
+set statusline="  %t%= %A %10u:%-7g %15E %20d "
+" set statusline="%t %f %{GitStatus()}"
 
 " ------------------------------------------------------------------------------
 
@@ -351,15 +352,14 @@ nnoremap <c-u> <c-w>x
 " Images
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm} kolourpaint
 filextype {*.ico,*.webp} feh
+filextype {*.exe,*.msi} portproton
 
 fileviewer {*.jpg,*.jpeg,*png,*.webp,*.ico,*.avif}
-  \ echo %c
-  \ && tiv -w %pw -h %px %c
-  \ && identify %c:p
+\ tiv --width=%pw --height=%px %c
 
 fileviewer {*.svg}
   \ echo %c
-  \ && tiv -w %pw -h %px %c
+  \ && tiv --width=%pw --height=%px %c
   \ && identify %c:p
   \ && bat %c:p
 
@@ -367,7 +367,7 @@ fileviewer {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]},
   \ ffmpeg -i %c -vf fps=1 /tmp/_tmp.png -y > /dev/null 2>&1
-  \ || tiv /tmp/_tmp.png -w %pw -h %px
+  \ || tiv /tmp/_tmp.png --width=%pw --height=%px
   \ || rm /tmp/_tmp.png
 
 fileviewer {*.json}
@@ -389,6 +389,7 @@ nnoremap d$ vGd
 
 nnoremap o :clone<space>
 
+
 nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "yank to clipboard"<cr>
 
 nnoremap yp :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
@@ -405,6 +406,15 @@ nnoremap cd :!mv %d /%c<left><left><left>
 vnoremap cd :!mv %d /%c<left><left><left>
 nnoremap ch :!ln %f<space>
 nnoremap cs :!ln -s %f<space>
+
+nnoremap csp :!bash -c 'target="%c:p"; base="%f:r"; ext=".${target##*.}"; [[ "$target" == "$base" ]] && ext=""; num=1; while [[ -e "${base}_${num}${ext}" || -L "${base}_${num}${ext}" ]]; do ((num++)); done; ln -s "$target" "${base}_${num}${ext}"; echo "symlink created: ${base}_${num}${ext}"' <cr>
+
+nnoremap csf :!bash -c 'target="%c"; base="%f:r"; ext=".${target##*.}"; [[ "$target" == "$base" ]] && ext=""; num=1; while [[ -e "./${base}_${num}${ext}" || -L "./${base}_${num}${ext}" ]]; do ((num++)); done; ln -s "$target" "./${base}_${num}${ext}"; echo "relative symlink created: ./${base}_${num}${ext}"' <cr>
+
+nnoremap chp :!bash -c 'target="%f"; base="%f:r"; ext=".${target##*.}"; [[ "$target" == "$base" ]] && ext=""; num=1; while [[ -e "${base}_${num}${ext}" || -L "${base}_${num}${ext}" ]]; do ((num++)); done; ln "$target" "${base}_${num}${ext}"; echo "symlink created: ${base}_${num}${ext}"' <cr>
+
+nnoremap chf :!bash -c 'target="%f"; base="%f:r"; ext=".${target##*.}"; [[ "$target" == "$base" ]] && ext=""; num=1; while [[ -e "./${base}_${num}${ext}" || -L "./${base}_${num}${ext}" ]]; do ((num++)); done; ln "$target" "./${base}_${num}${ext}"; echo "relative symlink created: ./${base}_${num}${ext}"' <cr>
+
 
 nnoremap v. ggvG
 nnoremap y. ggvG:yank<cr>
@@ -466,3 +476,4 @@ highlight /^.*\.(txt)$/ ctermfg=white
 highlight /^.*\.(md)$/ ctermfg=pink1
 highlight /^\..*rc$/ ctermfg=magenta
 highlight /^\..*ignore$/ ctermfg=darkred
+
