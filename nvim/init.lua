@@ -4,6 +4,7 @@ require("config.macros")
 require("config.options")
 require("config.lazy")
 require("config.keymaps")
+require("config.helpers")
 vim.cmd("colorscheme tender")
 
 vim.api.nvim_create_user_command("SpellCheck", function()

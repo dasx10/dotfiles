@@ -1,4 +1,130 @@
 vim.lsp.buf_get_clients = vim.lsp.get_clients;
+local function split_path(p)
+  local t = {}
+  for part in string.gmatch(p, "[^/]+") do
+    table.insert(t, part)
+  end
+  return t
+end
+
+local function relpath(from, to)
+  local from_parts = split_path(from)
+  local to_parts = split_path(to)
+  local i = 1
+  while i <= #from_parts and i <= #to_parts and from_parts[i] == to_parts[i] do
+    i = i + 1
+  end
+  local rel_parts = {}
+  for _ = i, #from_parts do table.insert(rel_parts, "..") end
+  for j = i, #to_parts do table.insert(rel_parts, to_parts[j]) end
+  return table.concat(rel_parts, "/")
+end
+
+local function fix_internal_imports(file_path)
+  local buf = vim.api.nvim_get_current_buf()
+  if not vim.api.nvim_buf_is_loaded(buf) then return end
+
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local updated = false
+  local file_dir = vim.fn.fnamemodify(file_path, ":h")
+
+  for i, line in ipairs(lines) do
+    local path = line:match("from%s+['\"](%.%S+)['\"]") or line:match("require%s*%(['\"](%.%S+)['\"]%)")
+    if path then
+      local abs_import = vim.fn.resolve(file_dir .. "/" .. path)
+      if vim.loop.fs_stat(abs_import) then
+        local new_rel = vim.fn.fnamemodify(relpath(abs_import, file_dir), ":.")
+        if not new_rel:match("^%.") then
+          new_rel = "./" .. new_rel
+        end
+        local new_line = line:gsub(vim.pesc(path), new_rel)
+        if new_line ~= line then
+          lines[i] = new_line
+          updated = true
+        end
+      end
+    end
+  end
+
+  if updated then
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    vim.cmd("write")
+  end
+end
+
+local function rename_file()
+  local source = vim.api.nvim_buf_get_name(0)
+  local source_dir = vim.fn.fnamemodify(source, ":h")
+
+  vim.ui.input({
+    prompt = "Rename file via LSP:",
+    completion = "file",
+    default = source,
+  }, function(target)
+    if not target or target == "" or target == source then
+      vim.notify("Rename aborted", vim.log.levels.WARN)
+      return
+    end
+
+    vim.fn.mkdir(vim.fn.fnamemodify(target, ":h"), "p")
+
+    local existing_buf = vim.fn.bufnr(target)
+    if existing_buf ~= -1 then
+      vim.cmd("bdelete! " .. existing_buf)
+    end
+
+    local ok = pcall(vim.api.nvim_buf_set_name, 0, target)
+    if not ok then
+      vim.notify("Failed to rename buffer", vim.log.levels.ERROR)
+      return
+    end
+
+    vim.cmd("write")
+    vim.api.nvim_buf_set_option(0, "modified", false)
+
+    vim.cmd("edit " .. vim.fn.fnameescape(target))
+    local target_dir = vim.fn.fnamemodify(target, ":h")
+    if target_dir ~= source_dir then
+      fix_internal_imports(target)
+    end
+
+    local params = {
+      command = "_typescript.applyRenameFile",
+      arguments = {
+        {
+          sourceUri = vim.uri_from_fname(source),
+          targetUri = vim.uri_from_fname(target),
+        },
+      },
+      title = "",
+    }
+
+    vim.lsp.buf.execute_command(params)
+
+    vim.defer_fn(function()
+      os.remove(source)
+
+      local files = vim.fn.globpath(source_dir, "*", false, true)
+      if vim.fn.empty(files) == 1 then
+        vim.fn.delete(source_dir, "d")
+        vim.notify("Removed empty directory: " .. source_dir, vim.log.levels.INFO)
+      end
+
+      vim.notify("LSP rename completed", vim.log.levels.INFO)
+    end, 100)
+  end)
+end
+
+vim.api.nvim_create_user_command("LspRenameFile", rename_file, {})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  callback = function()
+    vim.api.nvim_create_user_command("LspRenameFile", rename_file, {})
+  end,
+})
+
+
 return {
   -- Main LSP Configuration
   "neovim/nvim-lspconfig",
@@ -247,7 +373,24 @@ return {
           },
         },
       },
-      ts_ls = {},
+      ts_ls = {
+        cmd = {
+          RenameFile = {
+            rename_file,
+            description = "Rename File"
+          },
+        },
+      },
+      eslint = {
+        settings = {
+          workingDirectory = {
+            mode = "auto",
+          },
+          experimental = {
+            useFlatConfig = true,
+          },
+        },
+      },
       bashls = {},
       marksman = {},
       -- clangd = {},
@@ -328,6 +471,7 @@ return {
       "prettierd",
       "typescript-language-server", -- Mason package name
       "emmet_language_server",
+      "eslint-lsp",
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -348,7 +492,18 @@ return {
           end
 
           server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-          require("lspconfig")[server_name].setup(server)
+          if server_name == "eslint" then
+            require("lspconfig").eslint.setup({
+              capabilities = server.capabilities,
+              settings = {
+                workingDirectory = {
+                  mode = "auto",
+                },
+              },
+            })
+          else
+            require("lspconfig")[server_name].setup(server)
+          end
         end,
       },
     })

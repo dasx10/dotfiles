@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd(
           return word ~= ""
              and word:match("^[$_%a][$%w_]*$")
              and word ~= "if"
+             and word ~= "else"
              and word ~= "const"
              and word ~= "let"
              and word ~= "var"
@@ -53,6 +54,7 @@ vim.api.nvim_create_autocmd(
              and word ~= "NaN"
              and word ~= "Infinity"
              and word ~= "this"
+             and word ~= "throw"
         end
       
         local total_lines = vim.fn.line("$")
@@ -82,6 +84,68 @@ vim.api.nvim_create_autocmd(
           end
         end
       end, { noremap = true })
+
+      n("j", "0/throw<cr>cwreturn Promise.reject(<esc>lxA)<esc>")
+_G.smart_import_handler = function()
+  local word = vim.fn.expand("<cword>")
+  local current_file = vim.api.nvim_buf_get_name(0)
+  local current_dir = vim.fn.fnamemodify(current_file, ":p:h")
+
+  vim.cmd("normal! m0")
+  vim.api.nvim_buf_set_lines(0, 0, 0, false, { "import " .. word .. " from " })
+
+  require('fzf-lua').files({
+    fzf_opts = { ['--query'] = word },
+    actions = {
+      ['default'] = function(selected)
+        local path_tools = require('fzf-lua').path
+        local target_path = path_tools.entry_to_file(selected[1]).path
+        target_path = vim.fn.fnamemodify(target_path, ":p")
+
+        -- Функція для розрахунку відносного шляху
+        local function get_relative_path(source, dest)
+          local function split(path)
+            local t = {}
+            for str in path:gmatch("[^/]+") do table.insert(t, str) end
+            return t
+          end
+
+          local s = split(source)
+          local d = split(dest)
+          local i = 1
+          while s[i] and d[i] and s[i] == d[i] do
+            i = i + 1
+          end
+
+          local rel = {}
+          for j = i, #s do table.insert(rel, "..") end
+          for j = i, #d do table.insert(rel, d[j]) end
+          
+          local res = table.concat(rel, "/")
+          -- Якщо файл у тій же папці, додаємо ./
+          if not res:match("^%.%.") then res = "./" .. res end
+          return res
+        end
+
+        local rel = get_relative_path(current_dir, target_path)
+
+        -- РЯДОК З ОБРІЗКОЮ ВИДАЛЕНО, щоб зберегти розширення (.ts, .tsx тощо)
+        
+        local final_text = '"' .. rel .. '";'
+        local line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+        vim.api.nvim_buf_set_lines(0, 0, 1, false, { line .. final_text })
+        
+        vim.cmd('normal! `0')
+      end,
+      ['esc'] = function()
+        vim.api.nvim_buf_set_lines(0, 0, 1, false, {})
+        vim.cmd('normal! `0')
+      end
+    }
+  })
+end
+n("i", "<cmd>lua _G.smart_import_handler()<cr>")
+
 
       v("i",  "\"0cif (<esc>m0a) {<cr>}<esc><up>\"0pvi{=`0a")
       -- v("_",  "\"0c() => {<esc>m0a<cr>}<esc><up>\"0pvi{=`0vi{o<esc>3bi")

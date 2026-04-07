@@ -4,7 +4,14 @@ return {
   -- dependencies = { "nvim-tree/nvim-web-devicons" },
   -- or if using mini.icons/mini.nvim
   dependencies = { "echasnovski/mini.icons" },
-  opts = {},
+  opts = {
+    keymaps = {
+      builtin = {
+        ["<C-a>"] = "select_all",
+        ["<C-q>"] = "toggle_all",
+      },
+    }
+  },
   keys = {
     {
       "<leader>gw",

@@ -6,6 +6,7 @@ exec --no-startup-id ~/.config/scripts/eng.sh
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id feh --bg-scale ~/bg.jpg
+exec_always --no-startup-id ~/.config/i3status/swap-writer.sh
 
 #Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -45,13 +46,13 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+Return exec "kitty tmux & ~/.config/scripts/eng.sh"
 bindsym $mod+Shift+T exec "kitty ~/.config/tmux/attach.sh & ~/.config/scripts/eng.sh"
-bindsym $mod+Shift+W exec "kitty ~/.config/scripts/work.sh & ~/.config/scripts/eng.sh"
+bindsym $mod+Shift+W workspace number 3; exec "kitty ~/.config/scripts/work.sh & ~/.config/scripts/eng.sh"
 bindsym $mod+d exec "dmenu_run ; ~/.config/scripts/eng.sh"
 bindsym $mod+p exec "~/.config/scripts/eng.sh; ~/.config/scripts/passmenu.sh"
 bindsym $mod+i exec "~/.config/scripts/eng.sh; ~/.config/scripts/links.sh"
-bindsym $mod+Shift+C exec code
+bindsym $mod+Shift+C exec codium
 bindsym $mod+Shift+M exec mongodb-compass
-bindsym $mod+Shift+G exec google-chrome
+bindsym $mod+Shift+G exec google-chrome --disable-gpu
 bindsym $mod+Shift+F exec firefox
 bindsym $mod+Shift+P exec gpick --pick
 bindsym $mod+Shift+S exec kazam
@@ -59,8 +60,11 @@ bindsym $mod+Shift+E exec kitty vifm
 bindsym $mod+Shift+O exec screenruler
 bindsym $mod+Shift+Delete exec kitty top
 bindsym $mod+Shift+A exec portproton
+bindsym $mod+n exec /home/dev/doc/auto/screen.js
 bindsym $mod+Print exec kazam
 bindsym --release Control+Shift+Delete exec kitty htop
+# bindsym $mod+o exec notify-send "$(xdotool getmouselocation)"
+bindsym $mod+o exec notify-send "1"
 
 #alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -100,10 +104,10 @@ bindsym Control+$mod+Shift+Up resize shrink height 10 px or 10 ppt
 bindsym Control+$mod+Shift+Right resize grow width 10 px or 10 ppt
 
 #alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left move left 1 px
+bindsym $mod+Shift+Down move down 1 px
+bindsym $mod+Shift+Up move up 1 px
+bindsym $mod+Shift+Right move right 1 px
 
 #visual
 bindsym $mod+b split h
@@ -122,7 +126,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
-exec google-chrome
+exec google-chrome --disable-gpu
 
 set $ws1 "1"
 set $ws2 "2"

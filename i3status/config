@@ -25,6 +25,7 @@ order += "battery 1"
 # order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "memory"
+order += "read_file swap"
 order += "load"
 order += "disk /"
 order += "disk /home/dev/doc"
@@ -34,7 +35,7 @@ order += "tztime localtime"
 
 memory {
   memory_used_method = classical
-  format=" ☷ %used %percentage_used | %free %percentage_free"
+  format=" ☷RAM %used %percentage_used | %free %percentage_free"
 # format=" ☷ %used %total | %percentage_free free"
   threshold_degraded="50%"
   threshold_critical="10%"
@@ -112,4 +113,9 @@ volume master {
   device = "default"
   mixer = "Master"
   mixer_idx = 0
+}
+
+
+read_file swap {
+  path = "/tmp/i3status-swap"
 }

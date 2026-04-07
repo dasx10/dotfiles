@@ -36,7 +36,7 @@ local extra = {
   }),
 
   s("ptr", {
-    t("protected "), n(1)
+    t("protected readonly "), n(1)
   }),
 
   s("it", {

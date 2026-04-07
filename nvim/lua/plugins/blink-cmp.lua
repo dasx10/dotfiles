@@ -75,7 +75,6 @@ return {
 
       -- (Default) Only show the documentation popup when manually triggered
       completion = {
-        autocomplete = false,
         documentation = { auto_show = false },
       },
       signature = { enabled = true },
