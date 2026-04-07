@@ -1,3 +1,47 @@
+local function is_spec(word)
+  return word ~= ""
+     and word:match("^[$_%a][$%w_]*$")
+     and word ~= "Infinity"
+     and word ~= "NaN"
+     and word ~= "async"
+     and word ~= "await"
+     and word ~= "break"
+     and word ~= "case"
+     and word ~= "catch"
+     and word ~= "class"
+     and word ~= "const"
+     and word ~= "continue"
+     and word ~= "debugger"
+     and word ~= "default"
+     and word ~= "delete"
+     and word ~= "do"
+     and word ~= "else"
+     and word ~= "export"
+     and word ~= "false"
+     and word ~= "finally"
+     and word ~= "for"
+     and word ~= "function"
+     and word ~= "if"
+     and word ~= "import"
+     and word ~= "in"
+     and word ~= "instanceof"
+     and word ~= "let"
+     and word ~= "null"
+     and word ~= "of"
+     and word ~= "return"
+     and word ~= "switch"
+     and word ~= "this"
+     and word ~= "throw"
+     and word ~= "true"
+     and word ~= "try"
+     and word ~= "typeof"
+     and word ~= "undefined"
+     and word ~= "var"
+     and word ~= "void"
+     and word ~= "while"
+     and word ~= "yield"
+end
+
 vim.api.nvim_create_autocmd(
   {"BufRead", "BufNewFile"},
   {
@@ -28,40 +72,12 @@ vim.api.nvim_create_autocmd(
       n("oz", "ca{(Object.freeze()<esc><left>p<left>%a)<esc><right>");
 
       vim.keymap.set("n", "<space><space>d", function()
-        local function is_valid_word(word)
-          return word ~= ""
-             and word:match("^[$_%a][$%w_]*$")
-             and word ~= "if"
-             and word ~= "else"
-             and word ~= "const"
-             and word ~= "let"
-             and word ~= "var"
-             and word ~= "function"
-             and word ~= "class"
-             and word ~= "return"
-             and word ~= "yield"
-             and word ~= "import"
-             and word ~= "export"
-             and word ~= "delete"
-             and word ~= "in"
-             and word ~= "instanceof"
-             and word ~= "typeof"
-             and word ~= "void"
-             and word ~= "null"
-             and word ~= "undefined"
-             and word ~= "true"
-             and word ~= "false"
-             and word ~= "NaN"
-             and word ~= "Infinity"
-             and word ~= "this"
-             and word ~= "throw"
-        end
       
         local total_lines = vim.fn.line("$")
       
         while true do
           local word = vim.fn.expand("<cword>")
-          if is_valid_word(word) then
+          if is_spec(word) then
             vim.cmd("normal! \"0yiw")
             local copied = vim.fn.getreg("0")
             vim.fn.append(vim.fn.line("."), "console.dir({ " .. copied .. " }, { depth: 10 })")
@@ -144,9 +160,36 @@ _G.smart_import_handler = function()
     }
   })
 end
+
+-- map <space><space>ed to add export default
+vim.keymap.set("n", "<space><space>ed", function()
+  local word = vim.fn.expand("<cword>")
+
+  if not word:match("^[A-Za-z][A-Za-z0-9_]*$") then return end
+  if not is_spec(word) then return end
+
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local export_line_idx = nil
+  for i, l in ipairs(lines) do
+    if l:match("^export default ") then
+      export_line_idx = i - 1
+      break
+    end
+  end
+
+  local new_export = "export default " .. word .. ";"
+
+  if export_line_idx then
+    vim.api.nvim_buf_set_lines(0, export_line_idx, export_line_idx + 1, false, { new_export })
+  else
+    local last = #lines
+    -- skip trailing empty lines
+    while last > 0 and lines[last]:match("^%s*$") do last = last - 1 end
+    vim.api.nvim_buf_set_lines(0, last, last, false, { new_export })
+  end
+end, { buffer = bufnr, silent = true })
+
 n("i", "<cmd>lua _G.smart_import_handler()<cr>")
-
-
       v("i",  "\"0cif (<esc>m0a) {<cr>}<esc><up>\"0pvi{=`0a")
       -- v("_",  "\"0c() => {<esc>m0a<cr>}<esc><up>\"0pvi{=`0vi{o<esc>3bi")
       v("_",  "m0\"0c() => {<cr><C-R>0}<esc>kvi{=vi{o<esc>3b")
@@ -164,3 +207,4 @@ n("i", "<cmd>lua _G.smart_import_handler()<cr>")
     end
   }
 )
+
