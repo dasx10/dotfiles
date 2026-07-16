@@ -1,0 +1,45 @@
+#!/bin/bash
+
+socket=""
+fallback=""
+shopt -s nullglob
+
+for s in /run/user/1000/nvim* /tmp/nvim*; do
+    if [ -S "$s" ] && nvim --headless --server "$s" --remote-expr "1" &>/dev/null; then
+        if [ -z "$fallback" ]; then
+            fallback="$s"
+        fi
+        if [ -n "$(nvim --headless --server "$s" --remote-expr "expand('%:p')" 2>/dev/null)" ]; then
+            socket="$s"
+            break
+        fi
+    fi
+done
+
+socket="${socket:-$fallback}"
+
+if [ -z "$socket" ]; then
+    echo "Error: Active Neovim socket not found." >&2
+    exit 1
+fi
+
+case "$1" in
+    file)
+        nvim --headless --server "$socket" --remote-expr "expand('%:p')"
+        ;;
+    cursor)
+        nvim --headless --server "$socket" --remote-expr "join(getpos('.')[1:2], ' ')"
+        ;;
+    mode)
+        nvim --headless --server "$socket" --remote-expr "mode()"
+        ;;
+    selected)
+        cat /tmp/nvim.seleted 2>/dev/null
+        : > /tmp/nvim.seleted 2>/dev/null
+        echo ""
+        ;;
+    *)
+        echo "Usage: nvapi [file|cursor|mode|selected]" >&2
+        exit 1
+        ;;
+esac

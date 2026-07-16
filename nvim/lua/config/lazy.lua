@@ -30,6 +30,8 @@ require("lazy").setup({
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "kanagawa" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- automatically check for plugin updates (silently; see :Lazy for available updates)
+  checker = { enabled = true, notify = false },
+  -- don't notify when config files change
+  change_detection = { notify = false },
 })

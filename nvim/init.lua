@@ -1,48 +1,14 @@
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.stdpath("data") .. "/mason/bin"
 require("config.alt")
+require("config.gemini")
+require("config.nvim_context")
 require("config.macros")
 require("config.options")
 require("config.lazy")
 require("config.keymaps")
 require("config.helpers")
+require("config.visual")
 vim.cmd("colorscheme tender")
-
-vim.api.nvim_create_user_command("SpellCheck", function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local file = vim.api.nvim_buf_get_name(bufnr)
-  local namespace = vim.api.nvim_create_namespace("codespell")
-  vim.diagnostic.reset(namespace, bufnr)
-
-  vim.fn.jobstart({ "codespell", "--quiet-level=3", file }, {
-    stdout_buffered = true,
-    on_stdout = function(_, data)
-      if not data then return end
-
-      local diagnostics = {}
-      for _, line in ipairs(data) do
-        local path, lnum, msg = string.match(line, "^(.-):(%d+):%s(.+)$")
-        if path and lnum and msg then
-          table.insert(diagnostics, {
-            lnum = tonumber(lnum) - 1,
-            col = 0,
-            end_col = 80,
-            severity = vim.diagnostic.severity.WARN,
-            source = "codespell",
-            message = msg,
-          })
-        end
-      end
-
-      vim.diagnostic.set(namespace, bufnr, diagnostics)
-    end,
-  })
-end, {})
-vim.api.nvim_create_autocmd("BufWritePost", {
-  callback = function(args)
-    vim.cmd("SpellCheck")
-  end,
-})
-
 
 vim.filetype.add({
   extension = {
@@ -93,6 +59,4 @@ vim.api.nvim_create_user_command("BlinkDocumentation", function()
     if try_doc() then break end
   end
 end, {})
-
--- vim.api.nvim_set_keymap("n", "<C-space>", ":BlinkDocumentation<CR>", { noremap = true, silent = true })
 

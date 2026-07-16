@@ -279,7 +279,7 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 
 " Filter-out build and temporary files
 "
-filter node_modules
+filter node_modules .ai .github .claude .husky .git .svn .hg .bzr .DS_Store
 
 " ------------------------------------------------------------------------------
 
@@ -390,17 +390,17 @@ nnoremap d$ vGd
 nnoremap o :clone<space>
 
 
-nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "yank to clipboard"<cr>
+nnoremap yd :!echo -n %d | yank<cr>:echo expand('%"d') "yank to clipboard"<cr>
 
-nnoremap yp :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
-nnoremap yf :!echo -n %c | xclip -selection clipboard %i<cr>:echo expand('%"c') "yank to clipboard"<cr>
-nnoremap yn :!echo -n %c:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
-nnoremap yc :!cat -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
+nnoremap yp :!echo -n %c:p | yank<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
+nnoremap yf :!echo -n %c | yank<cr>:echo expand('%"c') "yank to clipboard"<cr>
+nnoremap yn :!echo -n %c:r | yank<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
+nnoremap yc :!cat -n %c:p | yank<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
 
-vnoremap yp :!echo -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
-vnoremap yf :!echo -n %f | xclip -selection clipboard %i<cr>:echo expand('%"c') "yank to clipboard"<cr>
-vnoremap yn :!echo -n %f:r | xclip -selection clipboard %i<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
-vnoremap yc :!cat -n %f:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
+vnoremap yp :!echo -n %f:p | yank<cr>:echo expand('%"c:p') "yank to clipboard"<cr>
+vnoremap yf :!echo -n %f | yank<cr>:echo expand('%"c') "yank to clipboard"<cr>
+vnoremap yn :!echo -n %f:r | yank<cr>:echo expand('%"c:r') "yank to clipboard"<cr>
+vnoremap yc :!cat -n %f:p | yank<cr>:echo expand('%"c:p') "content yank to clipboard"<cr>
 
 nnoremap cd :!mv %d /%c<left><left><left>
 vnoremap cd :!mv %d /%c<left><left><left>

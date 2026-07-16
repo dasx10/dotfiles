@@ -50,3 +50,15 @@ o.mouse = "a"
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }
+vim.opt.spelloptions = "camel"
+
+-- remember cursor position between sessions
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    local line = vim.fn.line("'\"")
+    if line > 1 and line <= vim.fn.line("$") then
+      vim.cmd([[normal! g`"zz]])
+    end
+  end,
+})

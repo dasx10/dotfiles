@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd(
           if is_spec(word) then
             vim.cmd("normal! \"0yiw")
             local copied = vim.fn.getreg("0")
-            vim.fn.append(vim.fn.line("."), "console.dir({ " .. copied .. " }, { depth: 10 })")
+            vim.fn.append(vim.fn.line("."), "/** DEBUG */ console.dir({ " .. copied .. " }, { depth: 10 })")
             vim.cmd("normal! j^v$")
             break
           end
@@ -198,11 +198,11 @@ n("i", "<cmd>lua _G.smart_import_handler()<cr>")
       v("af", "\"0casync function <esc>m0a() {<cr>}<esc><up>\"0pvi{=`0a")
       v("g",  "m0\"0cfunction*() {<cr>}<esc><up>\"0p`0")
       v("ag", "m0\"0casync function*() {<cr>}<esc><up>\"0p`0")
-      v('tc', "\"0ctry {<cr>}<esc>k\"0pvi{=vi{<esc>ja catch (error) {<cr><cr>}<esc>ka  ")
-      v('tf', "\"0ctry {<cr>}<esc>k\"0pvi{=vi{<esc>ja finally {<cr><cr>}<esc>ka  ")
-      v('tcf', "\"0ctry {}<esc>m0a catch (error) {<cr><cr>} finally {<cr><cr>}<esc>`0i<cr><C-R>0<esc>`0jvi{=vi{")
+      v('tc', "ctry {<cr>} catch (error) {<cr>}<esc>m02kpvi{=`0ko")
+      v('tf', "ctry {<cr>} finally {<cr>}<esc>m02kpvi{=`0ko")
+      v('tcf', "ctry {<cr>} catch (error) {<cr>} finally {<cr>}<esc>m03kpvi{=`0/finally<cr>o<esc>/catch<cr>f{a<cr><bs><tab>")
 
-      map("n", "=l", ":!npx eslint --fix %<cr>")
+      map("n", "=l", ":LspEslintFixAll<cr>")
       map("v", "<space>gr", ":AvanteEdit Resolve merge conflict if the data is identical.  If the data is not identical but shares a common origin — move it up if possible,  or place it below with the corrected data and create a Git conflict next to it that I should resolve manually.  It's allowed to split into multiple separate Git conflicts if that helps clarify the context.  If the content is unclear or the data has no common origin — do nothing.<cr>")
     end
   }

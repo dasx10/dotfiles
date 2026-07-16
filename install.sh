@@ -11,6 +11,11 @@ ln -sf $PWD/kazam ~/.config/kazam
 
 ln -sf $PWD/.zshrc ~/.zshrc
 
+# nvim MCP server for Claude Code
+mkdir -p ~/.local/share/nvim-mcp
+ln -sf $PWD/nvim-mcp/server.py ~/.local/share/nvim-mcp/server.py
+echo -e "Package: chromium-browser\nPin: release o=Ubuntu\nPin-Priority: -10\n\nPackage: chromium\nPin: release o=linuxmint\nPin-Priority: 1000" | sudo tee /etc/apt/preferences.d/chromium-mint.pref
+
 sudo apt update
 sudo apt upgrade -y
 
@@ -50,6 +55,8 @@ sudo apt install -y \
    ffmpeg \
    gpick \
    python3-pip \
+   pipx \
+   chromium \
    qbittorrent
 
 # install neovim
@@ -62,6 +69,9 @@ rm nvim-linux-x86_64.tar.gz
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
+
+# install uv (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # install node
 npm i -g typescript typescript-language-server yarn eslint n pnpm
@@ -88,3 +98,6 @@ rm linux_64
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 rm get-docker.sh
+
+# Register nvim-context MCP server in Claude Code (global scope)
+claude mcp add --scope user nvim-context uv -- run "$HOME/.local/share/nvim-mcp/server.py"

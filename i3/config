@@ -5,7 +5,7 @@ font pango:monospace 8, FontAwesome 8
 exec --no-startup-id ~/.config/scripts/eng.sh
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-scale ~/bg.jpg
+exec --no-startup-id feh --bg-scale ~/bg.png
 exec_always --no-startup-id ~/.config/i3status/swap-writer.sh
 
 #Use pactl to adjust volume in PulseAudio.
@@ -44,13 +44,13 @@ bindsym --release Shift+Control+Print exec (import png:- | xclip -t 'image/png' 
 #My bind program
 bindsym $mod+Shift+q kill
 bindsym $mod+Return exec kitty
+bindsym $mod+t exec --no-startup-id /home/dev/doc/pet/ai-clip/ai-clip fix
 bindsym $mod+Shift+Return exec "kitty tmux & ~/.config/scripts/eng.sh"
 bindsym $mod+Shift+T exec "kitty ~/.config/tmux/attach.sh & ~/.config/scripts/eng.sh"
 bindsym $mod+Shift+W workspace number 3; exec "kitty ~/.config/scripts/work.sh & ~/.config/scripts/eng.sh"
 bindsym $mod+d exec "dmenu_run ; ~/.config/scripts/eng.sh"
 bindsym $mod+p exec "~/.config/scripts/eng.sh; ~/.config/scripts/passmenu.sh"
 bindsym $mod+i exec "~/.config/scripts/eng.sh; ~/.config/scripts/links.sh"
-bindsym $mod+Shift+C exec codium
 bindsym $mod+Shift+M exec mongodb-compass
 bindsym $mod+Shift+G exec google-chrome --disable-gpu
 bindsym $mod+Shift+F exec firefox
@@ -61,10 +61,18 @@ bindsym $mod+Shift+O exec screenruler
 bindsym $mod+Shift+Delete exec kitty top
 bindsym $mod+Shift+A exec portproton
 bindsym $mod+n exec /home/dev/doc/auto/screen.js
-bindsym $mod+Print exec kazam
+
+# Старт запису: Win + s + PrintScreen
+bindsym $mod+Shift+c exec kazam --start
+# Пауза запису: Win + p + PrintScreen
+bindsym $mod+Shift+x exec kazam --pause
+# Завершити запис: Win + f + PrintScreen
+bindsym $mod+Shift+z exec kazam --finish
+
+# Активація режиму через Win + PrintScreen
 bindsym --release Control+Shift+Delete exec kitty htop
 # bindsym $mod+o exec notify-send "$(xdotool getmouselocation)"
-bindsym $mod+o exec notify-send "1"
+bindsym $mod+o exec --no-startup-id ~/.config/scripts/promptmenu.sh
 
 #alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -126,7 +134,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
-exec google-chrome --disable-gpu
+exec --no-startup-id ~/.config/i3/startup.sh
 
 set $ws1 "1"
 set $ws2 "2"
@@ -141,6 +149,10 @@ set $ws10 "10"
 set $ws11 "11"
 set $ws12 "12"
 set $ws0 "0"
+
+# Assign Chrome windows to specific workspaces
+assign [class="ChromeWork"] $ws1
+assign [class="ChromePersonal"] $ws2
 
 #switch to workspace
 bindsym $mod+1 workspace number $ws1

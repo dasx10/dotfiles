@@ -140,6 +140,62 @@ return {
     { "j-hui/fidget.nvim", opts = {} },
   },
   config = function()
+    -- Show LSP stderr messages as floating notifications instead of blocking "Press ENTER" prompts
+    local function floating_notify(msg, level)
+      local hl_groups = {
+        [vim.log.levels.ERROR] = "DiagnosticError",
+        [vim.log.levels.WARN] = "DiagnosticWarn",
+        [vim.log.levels.INFO] = "DiagnosticInfo",
+      }
+      local titles = {
+        [vim.log.levels.ERROR] = "LSP Error",
+        [vim.log.levels.WARN] = "LSP Warning",
+        [vim.log.levels.INFO] = "LSP Info",
+        [vim.log.levels.DEBUG] = "LSP Debug",
+        [vim.log.levels.TRACE] = "LSP Trace",
+      }
+      local lines = vim.split(msg, "\n", { plain = true })
+      local max_width = 10
+      for _, line in ipairs(lines) do
+        max_width = math.max(max_width, vim.api.nvim_strwidth(line))
+      end
+      max_width = math.min(max_width + 2, vim.o.columns - 4)
+      local height = math.min(#lines, 8)
+
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+      vim.bo[buf].bufhidden = "wipe"
+
+      local win = vim.api.nvim_open_win(buf, false, {
+        relative = "editor",
+        width = max_width,
+        height = height,
+        row = 1,
+        col = vim.o.columns - max_width - 2,
+        style = "minimal",
+        border = "rounded",
+        title = titles[level] or "LSP",
+        title_pos = "center",
+      })
+      vim.wo[win].winhl = "NormalFloat:" .. (hl_groups[level] or "NormalFloat")
+
+      vim.defer_fn(function()
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_close(win, true)
+        end
+      end, 10000)
+    end
+
+    -- Intercept LSP errors from nvim-lspconfig's stderr handler (e.g. "nvim eslint: ...")
+    -- and show them as non-blocking floating windows instead of blocking the UI.
+    local _orig_notify = vim.notify
+    vim.notify = function(msg, level, opts)
+      if type(msg) == "string" and msg:find("^nvim ") == 1 then
+        return floating_notify(msg, level)
+      end
+      return _orig_notify(msg, level, opts)
+    end
+
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -335,52 +391,36 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      diagnosticls = {
+      harper_ls = {
         filetypes = {
-          "javascript", "typescript", "javascriptreact", "typescriptreact",
-        },
-        init_options = {
-          linters = {
-            codespell = {
-              sourceName = "codespell",
-              command = "codespell",
-              args = { "--quiet-level=3", "%filepath" },
-              formatPattern = [[^(.*):(\d+): (.*)$]],
-              securities = { ["*"] = "warning" },
-            },
-          },
-          filetypes = {
-            javascript = "codespell",
-            typescript = "codespell",
-            javascriptreact = "codespell",
-            typescriptreact = "codespell",
-          },
-        },
-      },
-
-      ltex = {
-        filetypes = {
-          "markdown", "text", "javascript", "typescript", "javascriptreact", "typescriptreact"
+          "markdown", "text",
         },
         settings = {
-          ltex = {
-            language = "en-US",
-            checkComments = true,
-            checkStrings = true,
-            dictionary = {
-              ["en-US"] = { "Neovim", "spellcheck" },
+          ["harper-ls"] = {
+            userDictPath = vim.fn.stdpath("config") .. "/spell/harper.dict",
+            linters = {
+              SpellCheck = true,
+              SentenceCapitalization = true,
+              UnclosedQuotes = true,
+              WrongQuotes = false,
+              LongSentences = true,
+              RepeatedWords = true,
+              Spaces = true,
+              Matcher = true,
+              CorrectNumberSuffix = true,
             },
+            codeActions = {
+              ForceStable = false,
+            },
+            markdown = {
+              IgnoreLinkTitle = false,
+            },
+            diagnosticSeverity = "hint",
+            isolateEnglish = false,
           },
         },
       },
-      ts_ls = {
-        cmd = {
-          RenameFile = {
-            rename_file,
-            description = "Rename File"
-          },
-        },
-      },
+      ts_ls = {},
       eslint = {
         settings = {
           workingDirectory = {
@@ -465,13 +505,12 @@ return {
       return pkg ~= "tsserver"
     end, ensure_installed)
     vim.list_extend(ensure_installed, {
-      "codespell",
-      "diagnostic-languageserver",
       "stylua",
       "prettierd",
       "typescript-language-server", -- Mason package name
       "emmet_language_server",
       "eslint-lsp",
+      "js-debug-adapter",
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -493,7 +532,7 @@ return {
 
           server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
           if server_name == "eslint" then
-            require("lspconfig").eslint.setup({
+            vim.lsp.config("eslint", {
               capabilities = server.capabilities,
               settings = {
                 workingDirectory = {
@@ -501,11 +540,22 @@ return {
                 },
               },
             })
+            vim.lsp.enable("eslint")
           else
-            require("lspconfig")[server_name].setup(server)
+            vim.lsp.config(server_name, server)
+            vim.lsp.enable(server_name)
           end
         end,
       },
     })
+
+    -- mason-lspconfig does not know about these servers, set them up manually
+    for _, name in ipairs({ "harper_ls" }) do
+      if servers[name] then
+        servers[name].capabilities = vim.tbl_deep_extend("force", {}, capabilities, servers[name].capabilities or {})
+        vim.lsp.config(name, servers[name])
+        vim.lsp.enable(name)
+      end
+    end
   end,
 }

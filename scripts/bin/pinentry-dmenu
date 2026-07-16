@@ -1,0 +1,48 @@
+#!/bin/bash
+# pinentry via dmenu/wofi for GPG passphrase prompt
+
+# Parse gpg-agent's --display argument
+for arg in "$@"; do
+  case "$arg" in
+    --display) shift; export DISPLAY="$1"; shift ;;
+    --display=*) export DISPLAY="${arg#*=}" ;;
+  esac
+done
+
+if [[ -n "$WAYLAND_DISPLAY" ]]; then
+  DMENU="wofi --dmenu -i --password"
+elif [[ -n "$DISPLAY" ]]; then
+  DMENU="dmenu -P"
+else
+  echo "OK Pleased to meet you"
+  echo "ERR 83886179 No display available <Pinentry>"
+  exit 0
+fi
+
+echo "OK Pleased to meet you"
+
+SETPROMPT=""
+SETDESC=""
+SETTITLE=""
+
+while IFS= read -r line; do
+  case "$line" in
+    SETPROMPT*)   SETPROMPT="${line#SETPROMPT }" ;;
+    SETDESC*)     SETDESC="${line#SETDESC }" ;;
+    SETTITLE*)    SETTITLE="${line#SETTITLE }" ;;
+    GETPIN)
+      prompt=""
+      [[ -n "$SETTITLE" ]] && prompt="$SETTITLE: "
+      [[ -n "$SETDESC" ]]  && prompt="$prompt$SETDESC"
+      [[ -z "$prompt" ]]   && prompt="Passphrase"
+      password=$(printf '\n' | $DMENU -p "$prompt" 2>/dev/null)
+      if [[ -n "$password" ]]; then
+        echo "D $password"
+        echo "OK"
+      else
+        echo "ERR 83886179 Operation cancelled <Pinentry>"
+      fi
+      ;;
+    *)     echo "OK" ;;
+  esac
+done

@@ -1,0 +1,50 @@
+# Personal
+- email: dasx10@
+  name: yk
+  entries:
+   - url: https://github.com
+   - url: https://app.clockify.me
+   - url: https://www.youtube.com 
+   - url: https://mail.google.com
+     name: Gmail (personal)
+   - url: https://im.rezet.io
+     name: mattermost
+   - url: https://gemini.google.com/app?hl=uk
+   - url: https://gemini.google.com/app/e4ca798ee677e6bf?hl=uk
+     name: gemini pm
+   - url: https://web.telegram.org/k/
+   - url: https://www.linkedin.com/
+   - url: https://www.facebook.com/
+
+- private: true
+  browser: chromium
+  name: pv
+  entries:
+    - url: https://regex101.com/
+    - url: https://fonts.google.com/
+    - url: https://translate.google.com/?sl=auto&tl=uk&op=translate
+    - url: https://admin.localhost:8085
+      name: keycloak kc
+    - url: https://yk-e.localhost:3000
+      name: ui
+    - url: https://admin.localhost:8000
+    - url: http://127.0.0.1:4040
+      name: local ngrok dashboard
+      
+
+- email: yev
+  name: emcp
+  entries:
+    - url: https://mail.google.com
+      name: Gmail
+    - url: https://github.com/enclaive/enclaive-deployment/pull
+    - url: https://mattermost.enclaive.cloud/
+    - url: https://portal.azure.com
+    - url: https://console.aws.amazon.com/
+    - url: https://calendar.google.com/calendar/u/0/r
+    - url: https://github.com/enclaive/emcp_be/pull
+    - url: https://github.com/enclaive/emcp_ui/pull
+    - url: https://github.com/enclaive/emcp-common/pull
+    - url: https://github.com/enclaive/emcp-workload-runner/pulls
+    - url: https://github.com/orgs/enclaive/projects/6
+      name: kanban
